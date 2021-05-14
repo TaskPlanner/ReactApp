@@ -16,7 +16,7 @@ const Heading = ({ module, sidebarFn }) => (
         </Button>
       </div>
       <div className='my-auto text-center text-md-left'>
-        <Title secondary>Project System | {module}</Title>
+        <Title secondary>Task Planner | {module}</Title>
         <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
       </div>
       <div className='my-auto'>
