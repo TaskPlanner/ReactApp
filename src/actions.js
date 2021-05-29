@@ -3,23 +3,18 @@ import { url } from 'routes';
 
 export const authREQUEST = 'authREQUEST';
 export const authSUCCESS = 'authSUCCESS';
-export const authFAILURE = 'authFAILURE';
 
 export const fetchREQUEST = 'fetchREQUEST';
 export const fetchSUCCESS = 'fetchSUCCESS';
-export const fetchFAILURE = 'fetchFAILURE';
 
 export const addREQUEST = 'addREQUEST';
 export const addSUCCESS = 'addSUCCESS';
-export const addFAILURE = 'addFAILURE';
 
 export const updateREQUEST = 'updateREQUEST';
 export const updateSUCCESS = 'updateSUCCESS';
-export const updateFAILURE = 'updateFAILURE';
 
 export const removeREQUEST = 'removeREQUEST';
 export const removeSUCCESS = 'removeSUCCESS';
-export const removeFAILURE = 'removeFAILURE';
 
 export const resetSUCCESS = 'resetSUCCESS';
 
@@ -37,7 +32,8 @@ export const auth = (username, password) =>
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: authFAILURE });
+        dispatch({ type: resetSUCCESS });
+        window.location.reload();
       });
   }
 
@@ -58,7 +54,8 @@ export const fetch = () =>
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: fetchFAILURE });
+        dispatch({ type: resetSUCCESS });
+        window.location.reload();
       });
   }
 
@@ -79,7 +76,8 @@ export const add = (content) =>
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: addFAILURE });
+        dispatch({ type: resetSUCCESS });
+        window.location.reload();
       });
   };
 
@@ -100,7 +98,8 @@ export const update = (content, _id) =>
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: updateFAILURE });
+        dispatch({ type: resetSUCCESS });
+        window.location.reload();
       });
   }
 
@@ -120,7 +119,8 @@ export const remove = (_id) =>
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: removeFAILURE });
+        dispatch({ type: resetSUCCESS });
+        window.location.reload();
       });
   }
 
