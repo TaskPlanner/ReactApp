@@ -31,7 +31,7 @@ const Sheet = ({ add, update, remove, item, module }) => {
                   comments: context.state.comments.map((i) => ({ text: i.text }))
                 }, item._id) :
                 add({
-                  ...values,
+                  ...values, state: 0, position: 0,
                   comments: context.state.comments.map((i) => ({ text: i.text }))
                 });
               setRedirect(true);
@@ -68,10 +68,8 @@ const Sheet = ({ add, update, remove, item, module }) => {
                     <div className='d-flex'>
                       <FaRegCalendar className='ml-3 my-auto' />
                       <Input
-                        className='w-100'
-                        autoComplete='off'
                         name='date'
-                        placeholder='date...'
+                        type='date'
                         defaultValue={values.date}
                         onChange={handleChange}
                       />
@@ -79,10 +77,8 @@ const Sheet = ({ add, update, remove, item, module }) => {
                     <div className='d-flex'>
                       <FaRegClock className='ml-3 my-auto' />
                       <Input
-                        className='w-100'
-                        autoComplete='off'
                         name='time'
-                        placeholder='time...'
+                        type='time'
                         defaultValue={values.time}
                         onChange={handleChange}
                       />
@@ -90,24 +86,29 @@ const Sheet = ({ add, update, remove, item, module }) => {
                     <div className='d-flex'>
                       <FaUndo className='ml-3 my-auto' />
                       <Input
-                        className='w-100'
-                        autoComplete='off'
+                        as='select'
                         name='iterate'
-                        placeholder='iterate...'
-                        defaultValue={values.iterate}
+                        value={values.iterate}
                         onChange={handleChange}
-                      />
+                      >
+                        <option value='add iterate'>iterate...</option>
+                        <option value='once a day'>once a day</option>
+                        <option value='once a week'>once a week</option>
+                        <option value='once a month'>once a month</option>
+                      </Input>
                     </div>
                     <div className='d-flex'>
                       <FaProjectDiagram className='ml-3 my-auto' />
                       <Input
-                        className='w-100'
-                        autoComplete='off'
+                        as='select'
                         name='project'
-                        placeholder='project...'
-                        defaultValue={values.project}
+                        value={values.project}
                         onChange={handleChange}
-                      />
+                      >
+                        <option value='add project'>project...</option>
+                        <option value='Task Planner'>Task Planner</option>
+                        <option value='Example Project'>Example Project</option>
+                      </Input>
                     </div>
                   </div>
                 </Collapse>

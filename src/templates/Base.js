@@ -14,10 +14,14 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Lato';
   }
 
-  button, input, textarea {
+  button, input, textarea, select {
     border: none;
     outline: none;
     font-family: 'Lato';
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-left: -20px;
   }
 
   a, a:hover {
