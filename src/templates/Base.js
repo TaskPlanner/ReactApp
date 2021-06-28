@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-/*const themeStyle = {
+const themeStyle = {
   s: '1.0rem',
   xs: '0.8rem',
   l: '1.3rem',
@@ -41,21 +41,6 @@ const GlobalStyle = createGlobalStyle`
   gray100: '#fcfcfc',
   gray200: '#f2f2f2',
   gray300: '#444444',
-};*/
-
-const themeStyle = {
-  s: '1.0rem',
-  xs: '0.8rem',
-  l: '1.4rem',
-  xl: '1.8rem',
-  dark100: '#555555',
-  dark200: '#333333',
-  blue100: '#515875',
-  blue200: '#515875',
-  gray100: '#fcfcfc',
-  gray200: '#d9e4ec',
-  gray300: '#444444',
-  red100: '#FF4500',
 };
 
 class Base extends Component {

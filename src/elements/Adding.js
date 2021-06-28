@@ -20,18 +20,18 @@ class Adding extends Component {
     const { redirect } = this.state;
 
     return (
-      <div>
+      <span>
         {redirect && <Redirect to={`/${module}/form`} />}
         <Button onClick={this.formFn} {...props}>
           {children}
         </Button>
-      </div>
+      </span>
     );
   }
 }
 
 Adding.propTypes = {
-  children: PropTypes.array.isRequired,
+  children: PropTypes.object.isRequired,
   module: PropTypes.oneOf(['inbox', 'planner', 'projects']),
 };
 

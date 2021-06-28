@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FaRegComment } from 'react-icons/fa';
 import { FaCheck, FaTrash } from 'react-icons/fa';
 import Button from 'elements/Button';
 import Input from 'elements/Input';
@@ -9,11 +8,6 @@ import Format from 'format';
 
 const Wrapper = styled.div`
   &.archive { opacity: 0.5; }
-`;
-
-const IconComment = styled(FaRegComment)`
-  color: ${({ theme }) => (theme.blue100)};
-  font-size: 1rem;
 `;
 
 class Comment extends Component {
@@ -39,34 +33,25 @@ class Comment extends Component {
     return (
       <Format.Consumer>
         {(context) => (
-          <Wrapper className={archive ? 'archive px-2' : 'px-2'}>
+          <Wrapper className={archive ? 'archive px-1' : 'px-1'}>
             <div className='d-flex justify-content-between'>
-              <div className='d-flex'>
-                <div className='my-auto'>
-                  <IconComment />
-                </div>
-                <div className='my-auto'>
-                  <Input
-                    className='w-100'
-                    id={_id}
-                    value={item}
-                    onChange={this.change}
-                    onBlur={context.update}
-                  />
-                </div>
-              </div>
-              <div className='my-auto'>
+              <Input
+                id={_id}
+                value={item}
+                onChange={this.change}
+                onBlur={context.update}
+              />
+              <div className='my-auto mr-2'>
                 <Button className={archive ? 'archive mx-1' : 'mx-1'}
-                  secondary type='button' onClick={this.archiveFn}>
-                  <FaCheck className='pb-1' />
+                  xs type='button' onClick={this.archiveFn}>
+                  <FaCheck />
                 </Button>
-                <Button secondary type='button'
+                <Button xs type='button'
                   onClick={() => context.remove(_id)}>
-                  <FaTrash className='pb-1' />
+                  <FaTrash />
                 </Button>
               </div>
             </div>
-            <hr className='m-1' />
           </Wrapper>
         )}
       </Format.Consumer>

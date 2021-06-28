@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
-import { FaRegStickyNote, FaCheck } from 'react-icons/fa';
-import { FaRegCheckSquare } from 'react-icons/fa';
+import { FaRegCheckSquare, FaCheck } from 'react-icons/fa';
+import { FaRegCalendar, FaRegClock } from 'react-icons/fa';
+import { FaProjectDiagram } from 'react-icons/fa';
 import Button from 'elements/Button';
 import Title from 'elements/Title';
 import Text from 'elements/Text';
@@ -17,12 +18,7 @@ const Wrapper = styled.div`
 
 const IconTask = styled(FaRegCheckSquare)`
   color: ${({ theme }) => (theme.red100)};
-  font-size: 2rem;
-`;
-
-const IconNote = styled(FaRegStickyNote)`
-  color: ${({ theme }) => (theme.red100)};
-  font-size: 2rem;
+  font-size: 1.6rem;
 `;
 
 class Card extends Component {
@@ -53,29 +49,31 @@ class Card extends Component {
         <Wrapper className={archive && 'archive'}>
           <div className='d-flex justify-content-between'>
             <div onClick={this.detailsFn} className='d-flex pointer'>
-              <div className='my-auto mr-3'>
-                {type === 'task' && <IconTask />}
-                {type === 'note' && <IconNote />}
-              </div>
               <div className='my-auto'>
-                <Title>{title}</Title>
-                <Text>{date} | {time} | {project}</Text>
+                <IconTask className='mb-2 mr-2' />
+                <Title className='d-inline-block mr-2'>{title}</Title>
+                <Text className='d-inline-block mb-1'>
+                  <FaRegCalendar className='ml-1 mb-1' /> {date} |
+                  <FaRegClock className='ml-1 mb-1' /> {time} |
+                  <FaProjectDiagram className='ml-1 mb-1' /> {project}
+                </Text>
               </div>
             </div>
             <div className='my-auto'>
-              {type === 'task' &&
-                <Button onClick={this.archiveFn} secondary
-                  className={archive ? 'archive mx-1' : 'mx-1'}>
-                  <FaCheck className='pb-1' /> Complete
-                </Button>}
-              {type === 'note' &&
-                <Button onClick={this.archiveFn} secondary
-                  className={archive ? 'archive mx-1' : 'mx-1'}>
-                  <FaCheck className='pb-1' /> Archive
-                </Button>}
+              {type === 'task' && <>
+                <Text className='d-inline mx-2'>Task</Text>
+                <Button onClick={this.archiveFn} l
+                  className={archive && 'archive'}>
+                  <FaCheck />
+                </Button> </>}
+              {type === 'note' && <>
+                <Text className='d-inline mx-2'>Note</Text>
+                <Button onClick={this.archiveFn} l
+                  className={archive && 'archive'}>
+                  <FaCheck />
+                </Button> </>}
             </div>
           </div>
-          <hr className='mb-0 mt-3' />
         </Wrapper>
       </div>
     );

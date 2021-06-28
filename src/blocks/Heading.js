@@ -11,26 +11,24 @@ const Heading = ({ module, sidebarFn }) => (
   <div>
     <div className='d-flex justify-content-between mx-3'>
       <div className='my-auto d-md-none'>
-        <Button onClick={sidebarFn}>
+        <Button xl onClick={sidebarFn}>
           <FaBars className='pb-1' />
         </Button>
       </div>
       <div className='my-auto text-center text-md-left'>
         <Title secondary>Task Planner | {module}</Title>
-        <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+        <Text>Lorem ipsum dolor sit amet.</Text>
       </div>
       <div className='my-auto'>
-        <Adding>
-          <FaPlus className='pb-1' />
-          <span className='d-none d-md-inline'>
-            {module === 'inbox' && 'Add new Task / Note'}
-            {module === 'planner' && 'Add new Event'}
-            {module === 'projects' && 'Add new Project'}
-          </span>
-        </Adding>
+        <Text className='d-none d-md-inline m-2'>
+          {module === 'inbox' && 'Add new Task'}
+          {module === 'planner' && 'Add new Event'}
+          {module === 'projects' && 'Add new Project'}
+        </Text>
+        <Adding xl><FaPlus /></Adding>
       </div>
     </div>
-    <hr className='mt-4 mb-0' />
+    <hr className='mt-3 mb-0' />
   </div>
 );
 

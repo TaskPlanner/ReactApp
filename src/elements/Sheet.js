@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { add, update, remove } from 'actions';
-import { FaSearch, FaTrash } from 'react-icons/fa';
+import { FaAngleUp, FaAngleDown, FaTrash } from 'react-icons/fa';
+import { FaRegCalendar, FaRegClock } from 'react-icons/fa';
+import { FaProjectDiagram, FaUndo } from 'react-icons/fa';
 import { Collapse } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
 import Text from 'elements/Text';
@@ -13,7 +15,7 @@ import Format from 'format';
 
 const Sheet = ({ add, update, remove, item, module }) => {
   const [openOpt, setOpenOpt] = useState(true);
-  const [openCom, setOpenCom] = useState(false);
+  const [openCom, setOpenCom] = useState(true);
   const [redirect, setRedirect] = useState(false);
 
   return (
@@ -56,69 +58,67 @@ const Sheet = ({ add, update, remove, item, module }) => {
                 <hr className='m-1' />
                 <div className='d-flex justify-content-between m-1'>
                   <Text className='my-auto'>Options</Text>
-                  <Button onClick={() => setOpenOpt(!openOpt)}
-                    secondary type='button'>
-                    <FaSearch className='pb-1' /> More
-                </Button>
+                  <Button s type='button'
+                    onClick={() => setOpenOpt(!openOpt)}>
+                    {openOpt ? <FaAngleUp /> : <FaAngleDown />}
+                  </Button>
                 </div>
-                <hr className='m-1' />
                 <Collapse in={openOpt}>
                   <div>
-                    <Input
-                      className='w-100'
-                      autoComplete='off'
-                      name='date'
-                      placeholder='date...'
-                      defaultValue={values.date}
-                      onChange={handleChange}
-                    />
-                    <hr className='m-1' />
-                    <Input
-                      className='w-100'
-                      autoComplete='off'
-                      name='time'
-                      placeholder='time...'
-                      defaultValue={values.time}
-                      onChange={handleChange}
-                    />
-                    <hr className='m-1' />
-                    <Input
-                      className='w-100'
-                      autoComplete='off'
-                      name='iterate'
-                      placeholder='iterate...'
-                      defaultValue={values.iterate}
-                      onChange={handleChange}
-                    />
-                    <hr className='m-1' />
-                    <Input
-                      className='w-100'
-                      autoComplete='off'
-                      name='project'
-                      placeholder='project...'
-                      defaultValue={values.project}
-                      onChange={handleChange}
-                    />
-                    <hr className='m-1' />
-                    <Input
-                      className='w-100'
-                      autoComplete='off'
-                      name='priority'
-                      placeholder='priority...'
-                      defaultValue={values.priority}
-                      onChange={handleChange}
-                    />
-                    <hr className='m-1' />
+                    <div className='d-flex'>
+                      <FaRegCalendar className='ml-3 my-auto' />
+                      <Input
+                        className='w-100'
+                        autoComplete='off'
+                        name='date'
+                        placeholder='date...'
+                        defaultValue={values.date}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className='d-flex'>
+                      <FaRegClock className='ml-3 my-auto' />
+                      <Input
+                        className='w-100'
+                        autoComplete='off'
+                        name='time'
+                        placeholder='time...'
+                        defaultValue={values.time}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className='d-flex'>
+                      <FaUndo className='ml-3 my-auto' />
+                      <Input
+                        className='w-100'
+                        autoComplete='off'
+                        name='iterate'
+                        placeholder='iterate...'
+                        defaultValue={values.iterate}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className='d-flex'>
+                      <FaProjectDiagram className='ml-3 my-auto' />
+                      <Input
+                        className='w-100'
+                        autoComplete='off'
+                        name='project'
+                        placeholder='project...'
+                        defaultValue={values.project}
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
                 </Collapse>
+                <hr className='m-1' />
                 <div className='d-flex justify-content-between m-1'>
                   <Text className='my-auto'>Comments</Text>
-                  <Button onClick={() => setOpenCom(!openCom)}
-                    secondary type='button'>
-                    <FaSearch className='pb-1' /> More
-                </Button>
+                  <Button s type='button'
+                    onClick={() => setOpenCom(!openCom)}>
+                    {openCom ? <FaAngleUp /> : <FaAngleDown />}
+                  </Button>
                 </div>
-                <hr className='m-1' />
                 <Collapse in={openCom}>
                   <div><Comments /></div>
                 </Collapse>
