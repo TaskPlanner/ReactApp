@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { DragDropContext } from "react-beautiful-dnd";
+import { Droppable, Draggable } from "react-beautiful-dnd";
+import { FaPlus, FaRegComment } from 'react-icons/fa';
 import Button from 'elements/Button';
 import Input from 'elements/Input';
 import Comment from 'elements/Comment';
@@ -28,7 +30,8 @@ class Comments extends Component {
         {(context) => (
           <div>
             <div className='d-flex justify-content-between'>
-              <div className='my-auto'>
+              <div className='d-flex'>
+                <FaRegComment className='ml-3 my-auto' />
                 <Input
                   className='w-100'
                   autoComplete='off'
@@ -37,24 +40,49 @@ class Comments extends Component {
                   onChange={this.change}
                 />
               </div>
-              <div className='my-auto'>
-                <Button secondary type='button'
+              <div className='mr-1 my-auto'>
+                <Button s type='button'
                   onClick={() => {
                     context.add(item);
                     this.reset();
                   }}>
-                  <FaPlus className='pb-1' />
+                  <FaPlus className='p-1' />
                 </Button>
               </div>
             </div>
-            <hr className='m-1' />
-            {context.state.comments.map(item => (
-              <Comment
-                _id={item._id}
-                key={item._id}
-                text={item.text}
-              />
-            ))}
+            <DragDropContext onDragEnd={context.onDragEnd}>
+              <Droppable droppableId='droppable'>
+                {(provided) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    {context.state.comments.map((item, index) => (
+                      <Draggable
+                        key={item._id}
+                        draggableId={item._id}
+                        index={index}
+                      >
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <Comment
+                              _id={item._id}
+                              key={item._id}
+                              text={item.text}
+                            />
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
         )}
       </Format.Consumer>

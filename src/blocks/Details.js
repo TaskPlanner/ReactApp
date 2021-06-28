@@ -9,9 +9,13 @@ import Format from 'format';
 import contextor from 'contextor';
 
 class Details extends Component {
-  state = {
-    active: {},
-    comments: [],
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: {},
+      comments: [],
+    };
+    this.onDragEnd = this.onDragEnd.bind(this);
   };
 
   componentDidMount() {
@@ -32,7 +36,10 @@ class Details extends Component {
             comments: data.comments || [],
           });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+          window.location.reload();
+        });
     }
   };
 
@@ -58,7 +65,10 @@ class Details extends Component {
             });
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+          window.location.reload();
+        });
     }
   };
 
@@ -90,6 +100,14 @@ class Details extends Component {
     }));
   };
 
+  onDragEnd(result) {
+    if (!result.destination) return;
+    const comments = this.state.comments;
+    const [removed] = comments.splice(result.source.index, 1);
+    comments.splice(result.destination.index, 0, removed);
+    this.setState({ comments });
+  };
+
   render() {
     const { active } = this.state;
     const { module } = this.props;
@@ -98,6 +116,7 @@ class Details extends Component {
       add: this.add,
       update: this.update,
       remove: this.remove,
+      onDragEnd: this.onDragEnd,
     }
 
     return (

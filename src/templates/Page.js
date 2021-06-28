@@ -25,9 +25,8 @@ const Section = styled(Col)`
   background: ${({ theme }) => (theme.gray200)};
   overflow-y: auto;
   z-index: 200;
-  transform: translate(${({ visible }) =>
-    (visible ? '0' : '100%')});
-  transition: transform 0.3s ease-in-out;
+  margin-left: ${({ visible }) => (!visible && '100%')};
+  transition: margin 0.3s ease-in-out;
 `;
 
 const Content = styled(Col)`
