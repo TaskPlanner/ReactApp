@@ -15,6 +15,7 @@ class Inbox extends Component {
         (a.position > b.position) ? 1 : -1),
     };
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.moveFn = this.moveFn.bind(this);
   };
 
   componentDidMount() {
@@ -54,6 +55,17 @@ class Inbox extends Component {
       this.props.update({ position: index }, item._id));
   };
 
+  moveFn(source, top) {
+    const src = Number(source);
+    const dest = top ? 0 : Number(this.state.items.length);
+    const items = this.state.items;
+    const [removed] = items.splice(src, 1);
+    items.splice(dest, 0, removed);
+    this.setState({ items });
+    items.map((item, index) =>
+      this.props.update({ position: index }, item._id));
+  };
+
   render() {
     const { type } = this.props;
 
@@ -78,7 +90,7 @@ class Inbox extends Component {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                       >
-                        <Card {...item} />
+                        <Card moveFn={this.moveFn}{...item} />
                       </div>
                     )}
                   </Draggable>

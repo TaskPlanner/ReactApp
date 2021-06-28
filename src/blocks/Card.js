@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { update } from 'actions';
 import styled from 'styled-components';
-import { FaRegCheckSquare, FaCheck } from 'react-icons/fa';
-import { FaRegCalendar, FaRegClock } from 'react-icons/fa';
-import { FaProjectDiagram } from 'react-icons/fa';
+import { FaCheck, FaAlignCenter } from 'react-icons/fa';
+import { FaProjectDiagram, FaRegCalendar } from 'react-icons/fa';
+import { FaRegClock, FaRegCheckSquare } from 'react-icons/fa';
 import Button from 'elements/Button';
 import Title from 'elements/Title';
 import Text from 'elements/Text';
@@ -21,32 +23,61 @@ const IconTask = styled(FaRegCheckSquare)`
   font-size: 1.6rem;
 `;
 
+const Fade = styled.div`
+  &.in { opacity: 1; }
+  &.out { opacity: 0; }
+  transition: opacity 1s ease-in-out;
+`
+
 class Card extends Component {
   state = {
     redirect: false,
-    archive: false,
+    task: this.props.state,
+    fade: false,
   }
 
   componentDidUpdate() {
     if (this.state.redirect === true) {
       this.setState({ redirect: false });
     }
+    if (this.state.fade === true) {
+      this.setState({ fade: false });
+    }
   }
 
   detailsFn = () => this.setState({ redirect: true });
-  archiveFn = () => this.setState(prevState => ({
-    archive: !prevState.archive
-  }));
+
+  taskFn = () => (
+    this.setState({ fade: true }),
+    this.state.task == 0 && (
+      this.props.moveFn(this.props.position, true)
+    ),
+    this.state.task == 1 && (
+      this.props.moveFn(this.props.position, false)
+    ),
+    this.props.update({
+      state:
+        this.state.task == 0 && 1 ||
+        this.state.task == 1 && 2 ||
+        this.state.task == 2 && 0
+    }, this.props._id),
+    this.setState(prevState => ({
+      task:
+        prevState.task == 0 && 1 ||
+        prevState.task == 1 && 2 ||
+        prevState.task == 2 && 0
+    }))
+  );
 
   render() {
     const { module, _id, title } = this.props;
     const { type, date, time, project } = this.props;
-    const { redirect, archive } = this.state;
+    const { redirect, task, fade } = this.state;
 
     return (
-      <div>
+      <Fade className={!fade ? 'in' : 'out'}>
         {redirect && <Redirect to={`/${module}/${_id}`} />}
-        <Wrapper className={archive && 'archive'}>
+        <Wrapper className={task == 2 && 'archive'}>
           <div className='d-flex justify-content-between'>
             <div onClick={this.detailsFn} className='d-flex pointer'>
               <div className='my-auto'>
@@ -61,21 +92,24 @@ class Card extends Component {
             </div>
             <div className='my-auto'>
               {type === 'task' && <>
-                <Text className='d-inline mx-2'>Task</Text>
-                <Button onClick={this.archiveFn} l
-                  className={archive && 'archive'}>
+                <Text className='d-inline mx-2'>
+                  {task == 0 && 'Task'}
+                  {task == 1 && 'Progress'}
+                  {task == 2 && 'Complete'}
+                </Text>
+                <Button onClick={this.taskFn} l
+                  className={task != 0 && 'active'}>
                   <FaCheck />
                 </Button> </>}
               {type === 'note' && <>
                 <Text className='d-inline mx-2'>Note</Text>
-                <Button onClick={this.archiveFn} l
-                  className={archive && 'archive'}>
-                  <FaCheck />
+                <Button l className='active'>
+                  <FaAlignCenter />
                 </Button> </>}
             </div>
           </div>
         </Wrapper>
-      </div>
+      </Fade>
     );
   }
 }
@@ -100,4 +134,10 @@ Card.defaultProps = {
   project: 'add project',
 };
 
-export default contextor(Card);
+const mapDispatchToProps = (dispatch) => ({
+  update: (content, _id) =>
+    dispatch(update(content, _id)),
+});
+
+export default connect(null, mapDispatchToProps)
+  (contextor(Card));
