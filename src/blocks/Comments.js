@@ -73,6 +73,7 @@ class Comments extends Component {
                               _id={item._id}
                               key={item._id}
                               text={item.text}
+                              state={item.state}
                             />
                           </div>
                         )}

@@ -76,7 +76,8 @@ class Details extends Component {
     this.setState(prevState => ({
       comments: [...prevState.comments, {
         _id: `${Math.random().toString(10)}`,
-        text: item ? item : 'Example Comment'
+        text: item ? item : 'Example Comment',
+        state: 0,
       }],
     }));
   };
@@ -87,6 +88,7 @@ class Details extends Component {
         item => item._id === e.target.id ? {
           _id: e.target.id,
           text: e.target.value,
+          state: item.state,
         } : item
       )],
     }));
@@ -96,6 +98,18 @@ class Details extends Component {
     this.setState(prevState => ({
       comments: [...prevState.comments.filter(
         item => item._id !== _id
+      )],
+    }));
+  };
+
+  archive = (_id) => {
+    this.setState(prevState => ({
+      comments: [...prevState.comments.map(
+        item => item._id === _id ? {
+          _id: item._id,
+          text: item.text,
+          state: item.state == 0 ? 1 : 0,
+        } : item
       )],
     }));
   };
@@ -116,6 +130,7 @@ class Details extends Component {
       add: this.add,
       update: this.update,
       remove: this.remove,
+      archive: this.archive,
       onDragEnd: this.onDragEnd,
     }
 

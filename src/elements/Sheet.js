@@ -28,11 +28,14 @@ const Sheet = ({ add, update, remove, item, module }) => {
               item ?
                 update({
                   ...values,
-                  comments: context.state.comments.map((i) => ({ text: i.text }))
+                  comments: context.state.comments.map((i) =>
+                    ({ text: i.text, state: i.state }))
                 }, item._id) :
                 add({
-                  ...values, state: 0, position: 0,
-                  comments: context.state.comments.map((i) => ({ text: i.text }))
+                  ...values,
+                  state: 0, position: 0,
+                  comments: context.state.comments.map((i) =>
+                    ({ text: i.text, state: i.state }))
                 });
               setRedirect(true);
             }}>

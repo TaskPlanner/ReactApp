@@ -13,7 +13,6 @@ const Wrapper = styled.div`
 class Comment extends Component {
   state = {
     item: this.props.text,
-    archive: false,
   };
 
   change = (e) => {
@@ -22,18 +21,14 @@ class Comment extends Component {
     })
   };
 
-  archiveFn = () => this.setState(prevState => ({
-    archive: !prevState.archive
-  }));
-
   render() {
-    const { _id } = this.props;
-    const { item, archive } = this.state;
+    const { _id, state } = this.props;
+    const { item } = this.state;
 
     return (
       <Format.Consumer>
         {(context) => (
-          <Wrapper className={archive ? 'archive px-1' : 'px-1'}>
+          <Wrapper className={state == 1 ? 'archive px-1' : 'px-1'}>
             <div className='d-flex justify-content-between'>
               <Input
                 id={_id}
@@ -42,8 +37,8 @@ class Comment extends Component {
                 onBlur={context.update}
               />
               <div className='my-auto mr-2'>
-                <Button className={archive ? 'archive mx-1' : 'mx-1'}
-                  xs type='button' onClick={this.archiveFn}>
+                <Button className={state == 1 ? 'archive mx-1' : 'mx-1'}
+                  xs type='button' onClick={() => context.archive(_id)}>
                   <FaCheck />
                 </Button>
                 <Button xs type='button'
