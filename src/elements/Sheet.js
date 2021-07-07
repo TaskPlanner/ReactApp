@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { add, update, remove } from 'actions';
@@ -17,6 +17,13 @@ const Sheet = ({ add, update, remove, item, module }) => {
   const [openOpt, setOpenOpt] = useState(true);
   const [openCom, setOpenCom] = useState(true);
   const [redirect, setRedirect] = useState(false);
+  const [inbox, setInbox] = useState(true);
+  const [type, setType] = useState('task');
+
+  useEffect(() => {
+    item && setInbox(item.inbox);
+    item && setType(item.type);
+  }, [item]);
 
   return (
     <div>
@@ -27,13 +34,12 @@ const Sheet = ({ add, update, remove, item, module }) => {
             onSubmit={values => {
               item ?
                 update({
-                  ...values,
+                  ...values, type: type, inbox: inbox,
                   comments: context.state.comments.map((i) =>
                     ({ text: i.text, state: i.state }))
                 }, item._id) :
                 add({
-                  ...values,
-                  state: 0, position: 0,
+                  ...values, state: 0, position: -1, type: type, inbox: inbox,
                   comments: context.state.comments.map((i) =>
                     ({ text: i.text, state: i.state }))
                 });
@@ -43,10 +49,19 @@ const Sheet = ({ add, update, remove, item, module }) => {
               <Form>
                 <div className='d-flex justify-content-between my-1'>
                   <div>
-                    <Button className='m-1' secondary type='button'>Task</Button>
-                    <Button className='m-1' secondary type='button'>Note</Button>
+                    <Button className={type == 'task' ? 'active m-1' : 'm-1'}
+                      type='button' onClick={() => setType('task')}>
+                      Task
+                    </Button>
+                    <Button className={type == 'note' ? 'active m-1' : 'm-1'}
+                      type='button' onClick={() => setType('note')}>
+                      Note
+                    </Button>
                   </div>
-                  <Button className='m-1' secondary type='button'>Inbox</Button>
+                  <Button className={inbox ? 'active m-1' : 'm-1'}
+                    type='button' onClick={() => setInbox(!inbox)}>
+                    Inbox
+                  </Button>
                 </div>
                 <hr className='m-1' />
                 <Input
@@ -110,6 +125,7 @@ const Sheet = ({ add, update, remove, item, module }) => {
                       >
                         <option value='add project'>project...</option>
                         <option value='Task Planner'>Task Planner</option>
+                        <option value='Project System'>Project System</option>
                         <option value='Example Project'>Example Project</option>
                       </Input>
                     </div>
