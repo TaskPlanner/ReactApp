@@ -49,11 +49,8 @@ class Card extends Component {
 
   taskFn = () => (
     this.setState({ fade: true }),
-    this.state.task == 0 && (
-      this.props.moveFn(this.props.position, true)
-    ),
     this.state.task == 1 && (
-      this.props.moveFn(this.props.position, false)
+      this.props.moveFn(this.props.position)
     ),
     this.props.update({
       state:
@@ -135,8 +132,7 @@ Card.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  update: (content, _id) =>
-    dispatch(update(content, _id)),
+  update: (content, _id) => dispatch(update(content, _id)),
 });
 
 export default connect(null, mapDispatchToProps)

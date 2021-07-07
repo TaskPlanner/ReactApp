@@ -36,11 +36,13 @@ class Inbox extends Component {
             (a.position > b.position) ? 1 : -1),
         });
       }
-      if (this.props.inbox.length !== this.state.items.length) {
+      if (this.props.inbox.length > this.state.items.length) {
         this.setState({
           items: this.props.inbox.sort((a, b) =>
             (a.position > b.position) ? 1 : -1),
         });
+        this.props.inbox.map((item, index) =>
+          this.props.update({ position: index }, item._id));
       }
     }
   };
@@ -55,9 +57,9 @@ class Inbox extends Component {
       this.props.update({ position: index }, item._id));
   };
 
-  moveFn(source, top) {
+  moveFn(source) {
     const src = Number(source);
-    const dest = top ? 0 : Number(this.state.items.length);
+    const dest = Number(this.state.items.length);
     const items = this.state.items;
     const [removed] = items.splice(src, 1);
     items.splice(dest, 0, removed);
