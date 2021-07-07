@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Redirect } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Sidebar from 'blocks/Sidebar';
 import Heading from 'blocks/Heading';
 import Details from 'blocks/Details';
 import Form from 'blocks/Form';
+import contextor from 'contextor';
 
 const Aside = styled(Col)`
   background: ${({ theme }) => (theme.gray200)};
-  z-index: 300;
+  z-index: ${({ index }) => (index ? '200' : '700')};
   transform: translate(${({ visible }) =>
     (visible ? '0' : '-100%')});
   transition: transform 0.3s ease-in-out;
@@ -24,7 +26,7 @@ const Header = styled(Col)`
 const Section = styled(Col)`
   background: ${({ theme }) => (theme.gray200)};
   overflow-y: auto;
-  z-index: 200;
+  z-index: 500;
   margin-left: ${({ visible }) => (!visible && '100%')};
   transition: margin 0.3s ease-in-out;
 `;
@@ -32,24 +34,55 @@ const Section = styled(Col)`
 const Content = styled(Col)`
   height: 86vh;
   margin-top: 14vh;
+  z-index: 400;
+`;
+
+const Ground = styled.div`
+  background: black;
+  opacity: 0.1;
+  z-index: 300;
+  display: ${({ visible }) => (!visible && 'none')};
+`;
+
+const Background = styled.div`
+  background: black;
+  opacity: 0.1;
+  z-index: 600;
+  display: ${({ visible }) => (!visible && 'none')};
 `;
 
 class Page extends Component {
-  state = { sidebar: false }
+  state = {
+    sidebar: false,
+    redirect: false,
+  }
+
+  componentDidUpdate() {
+    if (this.state.redirect === true) {
+      this.setState({ redirect: false });
+    }
+  }
 
   sidebarFn = () => this.setState(prevState => ({
     sidebar: !prevState.sidebar
   }));
 
+  groundFn = () => this.setState({ redirect: true });
+
   render() {
-    const { children, type } = this.props;
-    const { sidebar } = this.state;
+    const { children, type, module } = this.props;
+    const { sidebar, redirect } = this.state;
 
     return (
       <div>
+        {redirect && <Redirect to={`/${module}`} />}
+        <Ground className='position-fixed w-100 h-100'
+          visible={type} onClick={this.groundFn} />
+        <Background className='position-fixed w-100 h-100'
+          visible={sidebar ? 1 : 0} onClick={this.sidebarFn} />
         <Container fluid>
           <Row>
-            <Aside visible={1} md={2} xs={6}
+            <Aside visible={1} index={type} md={2} xs={6}
               className='position-fixed h-100 p-5 d-none d-md-block'>
               <Sidebar sidebarFn={this.sidebarFn} />
             </Aside>
@@ -61,7 +94,7 @@ class Page extends Component {
               md={{ span: 10, offset: 2 }}>
               <Heading sidebarFn={this.sidebarFn} />
             </Header>
-            <Content className=' px-3 pb-3'
+            <Content className='h-auto px-3 pb-3'
               md={{ span: 10, offset: 2 }}>
               {children}
             </Content>
@@ -88,4 +121,4 @@ Page.defaultProps = {
   type: null,
 };
 
-export default Page;
+export default contextor(Page);
