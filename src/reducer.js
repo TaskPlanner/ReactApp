@@ -42,7 +42,7 @@ const initial = {
   ]
 };
 
-const reducer = (state = initial, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case authSUCCESS:
       return {
@@ -82,7 +82,7 @@ const reducer = (state = initial, action) => {
       };
     case resetSUCCESS:
       storage.removeItem('persist:root');
-      return initial;
+      return {};
     default:
       return state;
   }

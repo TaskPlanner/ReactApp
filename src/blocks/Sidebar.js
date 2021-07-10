@@ -14,7 +14,7 @@ import contextor from 'contextor';
 
 const List = styled.ul`
   list-style: none;
-  margin: 3rem 0;
+  margin: 5rem 0;
   padding: 0;
 `;
 
@@ -54,10 +54,6 @@ const Sidebar = ({ module, sidebarFn, reset }) => (
         <FaSignOutAlt />
       </Button>
       <Text className='d-inline m-2'>Logout</Text>
-    </div>
-    <div className='m-2 d-md-none'>
-      <Button l='true' onClick={sidebarFn}>
-        <FaTimes /> </Button>
     </div>
   </div>
 );

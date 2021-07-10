@@ -31,7 +31,6 @@ class Adding extends Component {
 }
 
 Adding.propTypes = {
-  children: PropTypes.object.isRequired,
   module: PropTypes.oneOf(['inbox', 'planner', 'projects']),
 };
 

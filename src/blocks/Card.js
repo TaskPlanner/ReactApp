@@ -89,7 +89,7 @@ class Card extends Component {
             </div>
             <div className='my-auto'>
               {type === 'task' && <>
-                <Text className='d-inline mx-2'>
+                <Text className='d-none d-md-inline mx-2'>
                   {task == 0 && 'Task'}
                   {task == 1 && 'Progress'}
                   {task == 2 && 'Complete'}
@@ -99,7 +99,7 @@ class Card extends Component {
                   <FaCheck />
                 </Button> </>}
               {type === 'note' && <>
-                <Text className='d-inline mx-2'>Note</Text>
+                <Text className='d-none d-md-inline mx-2'>Note</Text>
                 <Button l className='active'>
                   <FaAlignCenter />
                 </Button> </>}

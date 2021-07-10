@@ -82,25 +82,28 @@ class Page extends Component {
           visible={sidebar ? 1 : 0} onClick={this.sidebarFn} />
         <Container fluid>
           <Row>
-            <Aside visible={1} index={type} md={2} xs={6}
-              className='position-fixed h-100 p-5 d-none d-md-block'>
+            <Aside visible={1} index={type} lg={2} md={3} sm={5} xs={6}
+              className='position-fixed h-100 p-4 d-none d-md-block'>
               <Sidebar sidebarFn={this.sidebarFn} />
             </Aside>
-            <Aside visible={sidebar ? 1 : 0} md={2} xs={6}
-              className='position-fixed h-100 p-5 d-block d-md-none'>
+            <Aside visible={sidebar ? 1 : 0} lg={2} md={3} sm={5} xs={6}
+              className='position-fixed h-100 p-4 d-block d-md-none'>
               <Sidebar sidebarFn={this.sidebarFn} />
             </Aside>
-            <Header className='position-fixed px-3 pt-3'
-              md={{ span: 10, offset: 2 }}>
+            <Header className='position-fixed px-1 pt-2 px-sm-3 pt-sm-3'
+              lg={{ span: 10, offset: 2 }}
+              md={{ span: 9, offset: 3 }}>
               <Heading sidebarFn={this.sidebarFn} />
             </Header>
-            <Content className='h-auto px-3 pb-3'
-              md={{ span: 10, offset: 2 }}>
+            <Content className='h-auto px-1 pb-2 px-sm-3 pb-sm-3'
+              lg={{ span: 10, offset: 2 }}
+              md={{ span: 9, offset: 3 }}>
               {children}
             </Content>
             <Section visible={type}
-              className='position-fixed h-100 p-5'
+              className='position-fixed h-100 p-4'
               md={{ span: 4, offset: 8 }}
+              sm={{ span: 6, offset: 6 }}
               xs={{ span: 8, offset: 4 }}>
               {type === 'details' && <Details />}
               {type === 'form' && <Form />}
@@ -113,7 +116,6 @@ class Page extends Component {
 }
 
 Page.propTypes = {
-  children: PropTypes.object.isRequired,
   type: PropTypes.oneOf(['details', 'form', null]),
 };
 

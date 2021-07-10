@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
 const Button = styled.button`
-  font-size: ${({ theme }) => (theme.s)};
-  line-height: ${({ theme }) => (theme.s)};
+  font-size: ${({ theme }) => (theme.xs)};
+  line-height: ${({ theme }) => (theme.xs)};
   color: ${({ theme }) => (theme.blue200)};
   border: 0.15rem solid ${({ theme }) => (theme.blue200)};
   background: transparent;
@@ -16,8 +16,8 @@ const Button = styled.button`
 
   ${({ s }) => (
     s && css`
-      font-size: 1.6rem;
-      line-height: 1.6rem;
+      font-size: 1.4rem;
+      line-height: 1.4rem;
       padding: 0.4rem;
       border: none;
       color: ${({ theme }) => (theme.blue200)};
@@ -30,8 +30,8 @@ const Button = styled.button`
 
   ${({ xs }) => (
     xs && css`
-      font-size: 0.8rem;
-      line-height: 0.8rem;
+      font-size: 0.7rem;
+      line-height: 0.7rem;
       padding: 0.2rem;
       border: none;
       color: ${({ theme }) => (theme.blue200)};
@@ -44,18 +44,18 @@ const Button = styled.button`
 
   ${({ l }) => (
     l && css`
-      font-size: 0.8rem;
-      line-height: 0.8rem;
-      padding: 0.8rem;
+      font-size: 0.7rem;
+      line-height: 0.7rem;
+      padding: 0.7rem;
       border: 0.2rem solid ${({ theme }) => (theme.blue200)};
     `
   )};
 
   ${({ xl }) => (
     xl && css`
-      font-size: 1.2rem;
-      line-height: 1.2rem;
-      padding: 1.2rem;
+      font-size: 1.1rem;
+      line-height: 1.1rem;
+      padding: 1.1rem;
       border: 0.2rem solid ${({ theme }) => (theme.blue200)};
     `
   )};

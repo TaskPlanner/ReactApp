@@ -10,20 +10,13 @@ import Card from 'blocks/Card';
 class Inbox extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      items: props.inbox.sort((a, b) =>
-        (a.position > b.position) ? 1 : -1),
-    };
+    this.state = { items: [] };
     this.onDragEnd = this.onDragEnd.bind(this);
     this.moveFn = this.moveFn.bind(this);
   };
 
   componentDidMount() {
     this.props.fetch();
-    this.setState({
-      items: this.props.inbox.sort((a, b) =>
-        (a.position > b.position) ? 1 : -1),
-    });
   };
 
   componentDidUpdate() {
@@ -36,13 +29,11 @@ class Inbox extends Component {
             (a.position > b.position) ? 1 : -1),
         });
       }
-      if (this.props.inbox.length > this.state.items.length) {
+      if (this.props.inbox.length !== this.state.items.length) {
         this.setState({
           items: this.props.inbox.sort((a, b) =>
             (a.position > b.position) ? 1 : -1),
         });
-        this.props.inbox.map((item, index) =>
-          this.props.update({ position: index }, item._id));
       }
     }
   };
@@ -119,8 +110,7 @@ const mapStateToProps = ({ inbox }) => ({ inbox });
 
 const mapDispatchToProps = (dispatch) => ({
   fetch: () => (dispatch(fetch())),
-  update: (content, _id) =>
-    dispatch(update(content, _id)),
+  update: (content, _id) => dispatch(update(content, _id)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)

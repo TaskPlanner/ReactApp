@@ -8,6 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 <link href='https://fonts.googleapis.com/css2?family=Lato:wght@400;700' />
 
 const GlobalStyle = createGlobalStyle`
+  @media screen and (max-width: 1100px) {
+    html { font-size: 90%; }
+  }
+  
   body {
     margin: 0;
     background: #fcfcfc;
@@ -34,9 +38,9 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const themeStyle = {
-  s: '1.0rem',
-  xs: '0.8rem',
-  l: '1.3rem',
+  s: '0.9rem',
+  xs: '0.7rem',
+  l: '1.2rem',
   xl: '1.6rem',
   dark100: '#555555',
   dark200: '#333333',
