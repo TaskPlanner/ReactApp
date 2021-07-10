@@ -1,4 +1,4 @@
-export const url = 'https://localhost:5000';
+export const url = 'https://api.taskplanner.net';
 
 export const routes = {
   home: '/',
