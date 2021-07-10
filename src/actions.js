@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { url } from 'routes';
 
+export const regREQUEST = 'regREQUEST';
+export const regSUCCESS = 'regSUCCESS';
+
 export const authREQUEST = 'authREQUEST';
 export const authSUCCESS = 'authSUCCESS';
 
@@ -17,6 +20,25 @@ export const removeREQUEST = 'removeREQUEST';
 export const removeSUCCESS = 'removeSUCCESS';
 
 export const resetSUCCESS = 'resetSUCCESS';
+
+export const reg = (username, password) =>
+  (dispatch) => {
+    dispatch({ type: regREQUEST });
+    return axios({
+      method: 'POST',
+      withCredentials: true,
+      url: url + '/users/register',
+      data: { username, password },
+    })
+      .then(() => {
+        dispatch({ type: regSUCCESS });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: resetSUCCESS });
+        window.location.reload();
+      });
+  }
 
 export const auth = (username, password) =>
   (dispatch) => {

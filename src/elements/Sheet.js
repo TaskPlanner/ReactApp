@@ -150,7 +150,7 @@ const Sheet = ({ add, update, remove, item, module }) => {
                     remove(item._id);
                     setRedirect(true);
                   }}>
-                    <FaTrash className='pb-1' />
+                    <FaTrash />
                   </Button> :
                   <Button onClick={() => setRedirect(true)}>
                     Close

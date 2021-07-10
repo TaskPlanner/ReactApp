@@ -19,7 +19,7 @@ const Start = ({ children }) => (
         </Col>
         <Col className='m-5 p-5'>
           <Title secondary className='mb-5'>
-            Project System
+            Task Planner
           </Title>
           <Title className='my-2'>
             <FaCode className='mr-2' />Inbox

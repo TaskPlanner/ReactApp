@@ -12,7 +12,7 @@ const Heading = ({ module, sidebarFn }) => (
     <div className='d-flex justify-content-between mx-3'>
       <div className='my-auto d-md-none'>
         <Button xl onClick={sidebarFn}>
-          <FaBars className='pb-1' />
+          <FaBars />
         </Button>
       </div>
       <div className='my-auto text-center text-md-left'>

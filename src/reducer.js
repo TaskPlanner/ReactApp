@@ -1,4 +1,4 @@
-import { authSUCCESS, fetchSUCCESS } from 'actions';
+import { regSUCCESS, authSUCCESS, fetchSUCCESS } from 'actions';
 import { addSUCCESS, updateSUCCESS } from 'actions';
 import { removeSUCCESS, resetSUCCESS } from 'actions';
 import storage from 'redux-persist/lib/storage';
@@ -44,6 +44,11 @@ const initial = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case regSUCCESS:
+      return {
+        ...state,
+        registered: true,
+      };
     case authSUCCESS:
       return {
         ...state,

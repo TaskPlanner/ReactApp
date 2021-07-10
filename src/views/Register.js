@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { routes } from 'routes';
 import { connect } from 'react-redux';
-import { auth } from 'actions';
+import { reg } from 'actions';
 import { Formik, Form } from 'formik';
 import Start from 'templates/Start';
 import Title from 'elements/Title';
@@ -11,26 +11,22 @@ import Button from 'elements/Button';
 import Input from 'elements/Input';
 import Logo from 'assets/Logo.png';
 
-const Register = ({ user, auth, login }) => (
-  useEffect(() => {
-    user && login();
-  }),
-
+const Register = ({ registered, reg }) => (
   <Start>
     <Title className='m-3'>
       <img className='w-50 p-3' src={Logo} alt='Logo' />
     </Title>
-    <Title secondary>Register {user}</Title>
+    <Title secondary>Register</Title>
     <div className='my-5'>
       <Formik
         initialValues={{}}
         onSubmit={({ email, password }) => {
-          auth(email, password);
+          reg(email, password);
         }}
       >
         {({ values, handleChange }) => {
-          if (user) {
-            return <Redirect to={routes.home} />;
+          if (registered) {
+            return <Redirect to={routes.login} />;
           }
           return (
             <Form>
@@ -57,7 +53,7 @@ const Register = ({ user, auth, login }) => (
               <div className='my-4'>
                 <Button secondary type='submit'>
                   Register
-              </Button>
+                </Button>
               </div>
             </Form>
           )
@@ -65,20 +61,20 @@ const Register = ({ user, auth, login }) => (
       </Formik>
     </div>
     <div className='my-4'>
-      <Button as={Link} to="/">
-        GoBack
+      <Button as={Link} to='/login'>
+        Login
       </Button>
     </div>
   </Start>
 );
 
-const mapStateToProps = ({ user = null }) => ({
-  user,
+const mapStateToProps = ({ registered = null }) => ({
+  registered,
 });
 
 const mapDispatchToProps = dispatch => ({
-  auth: (email, password) =>
-    dispatch(auth(email, password))
+  reg: (email, password) =>
+    dispatch(reg(email, password))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)

@@ -20,7 +20,7 @@ const Login = ({ user, auth, login }) => (
     <Title className='m-3'>
       <img className='w-50 p-3' src={Logo} alt='Logo' />
     </Title>
-    <Title secondary>Login {user}</Title>
+    <Title secondary>Login</Title>
     <div className='my-5'>
       <Formik
         initialValues={{}}
@@ -57,7 +57,7 @@ const Login = ({ user, auth, login }) => (
               <div className='my-4'>
                 <Button secondary type='submit'>
                   Login
-              </Button>
+                </Button>
               </div>
             </Form>
           )
@@ -65,8 +65,8 @@ const Login = ({ user, auth, login }) => (
       </Formik>
     </div>
     <div className='my-4'>
-      <Button as={Link} to="/">
-        GoBack
+      <Button as={Link} to='/register'>
+        Register
       </Button>
     </div>
   </Start>
