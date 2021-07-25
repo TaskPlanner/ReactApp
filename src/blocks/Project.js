@@ -14,8 +14,8 @@ const Wrapper = styled.div`
 `;
 
 const IconProject = styled(FaRegFolder)`
-  color: ${({ theme }) => (theme.blue100)};
-  font-size: 2rem;
+  color: ${({ theme }) => (theme.red100)};
+  font-size: 1.6rem;
 `;
 
 const Project = ({ children, name }) => {
@@ -55,7 +55,6 @@ const Project = ({ children, name }) => {
 }
 
 Project.propTypes = {
-  children: PropTypes.array.isRequired,
   name: PropTypes.string,
 };
 

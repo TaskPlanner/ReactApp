@@ -155,9 +155,9 @@ Details.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  if (state[ownProps.module]) {
+  if (state['inbox']) {
     return {
-      active: state[ownProps.module].filter(
+      active: state['inbox'].filter(
         item => item._id === ownProps.element
       )
     }

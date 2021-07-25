@@ -2,45 +2,6 @@ import { regSUCCESS, authSUCCESS, fetchSUCCESS } from 'actions';
 import { addSUCCESS, updateSUCCESS } from 'actions';
 import { removeSUCCESS, resetSUCCESS } from 'actions';
 import storage from 'redux-persist/lib/storage';
-import { inbox } from 'data/inbox';
-
-const initial = {
-  inbox,
-  planner: [
-    {
-      _id: '1',
-      name: '10.03.2021',
-      data: inbox.filter(
-        (item) => ['1', '2'].includes(item._id)),
-    },
-    {
-      _id: '2',
-      name: '11.03.2021',
-      data: inbox.filter(
-        (item) => ['3', '4', '5'].includes(item._id)),
-    },
-  ],
-  projects: [
-    {
-      _id: '1',
-      name: 'Example Project',
-      data: inbox.filter(
-        (item) => ['1', '2'].includes(item._id)),
-    },
-    {
-      _id: '2',
-      name: 'Example Project',
-      data: inbox.filter(
-        (item) => ['3', '4'].includes(item._id)),
-    },
-    {
-      _id: '3',
-      name: 'Example Project',
-      data: inbox.filter(
-        (item) => ['5', '6'].includes(item._id)),
-    },
-  ]
-};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -58,12 +19,32 @@ const reducer = (state, action) => {
       return {
         ...state,
         inbox: [...action.payload.data],
+        projects: [
+          {
+            _id: '1',
+            name: 'Task Planner',
+            data: [...action.payload.data].filter(
+              item => item.project == 'Task Planner'
+            ),
+          },
+        ],
       };
     case addSUCCESS:
       return {
         ...state,
         inbox: [
           ...state.inbox, action.payload.data
+        ],
+        projects: [
+          {
+            _id: '1',
+            name: 'Task Planner',
+            data: [
+              ...state.inbox, action.payload.data
+            ].filter(
+              item => item.project == 'Task Planner'
+            ),
+          },
         ],
       };
     case updateSUCCESS:
@@ -75,6 +56,20 @@ const reducer = (state, action) => {
               action.payload.data : item
           ),
         ],
+        projects: [
+          {
+            _id: '1',
+            name: 'Task Planner',
+            data: [
+              ...state.inbox.map(
+                item => item._id === action.payload._id ?
+                  action.payload.data : item
+              ),
+            ].filter(
+              item => item.project == 'Task Planner'
+            ),
+          },
+        ],
       };
     case removeSUCCESS:
       return {
@@ -83,6 +78,19 @@ const reducer = (state, action) => {
           ...state.inbox.filter(
             item => item._id !== action.payload._id
           ),
+        ],
+        projects: [
+          {
+            _id: '1',
+            name: 'Task Planner',
+            data: [
+              ...state.inbox.filter(
+                item => item._id !== action.payload._id
+              ),
+            ].filter(
+              item => item.project == 'Task Planner'
+            ),
+          },
         ],
       };
     case resetSUCCESS:

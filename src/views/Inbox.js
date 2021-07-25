@@ -1,102 +1,14 @@
-import React, { Component } from 'react';
-import { DragDropContext } from "react-beautiful-dnd";
-import { Droppable, Draggable } from "react-beautiful-dnd";
+import React from 'react';
 import { connect } from 'react-redux';
-import { fetch, update } from 'actions';
 import PropTypes from 'prop-types';
 import Page from 'templates/Page';
-import Card from 'blocks/Card';
+import List from 'templates/List';
 
-class Inbox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { items: [] };
-    this.onDragEnd = this.onDragEnd.bind(this);
-    this.moveFn = this.moveFn.bind(this);
-  };
-
-  componentDidMount() {
-    this.props.fetch();
-  };
-
-  componentDidUpdate() {
-    if (this.state.items !== this.props.inbox) {
-      if (this.props.inbox.every(i =>
-        i._id === (this.state.items[i.position] != undefined &&
-          this.state.items[i.position]._id))) {
-        this.setState({
-          items: this.props.inbox.sort((a, b) =>
-            (a.position > b.position) ? 1 : -1),
-        });
-      }
-      if (this.props.inbox.length !== this.state.items.length) {
-        this.setState({
-          items: this.props.inbox.sort((a, b) =>
-            (a.position > b.position) ? 1 : -1),
-        });
-      }
-    }
-  };
-
-  onDragEnd(result) {
-    if (!result.destination) return;
-    const items = this.state.items;
-    const [removed] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, removed);
-    this.setState({ items });
-    items.map((item, index) =>
-      this.props.update({ position: index }, item._id));
-  };
-
-  moveFn(source) {
-    const src = Number(source);
-    const dest = Number(this.state.items.length);
-    const items = this.state.items;
-    const [removed] = items.splice(src, 1);
-    items.splice(dest, 0, removed);
-    this.setState({ items });
-    items.map((item, index) =>
-      this.props.update({ position: index }, item._id));
-  };
-
-  render() {
-    const { type } = this.props;
-
-    return (
-      <Page type={type}>
-        <DragDropContext onDragEnd={this.onDragEnd}>
-          <Droppable droppableId='droppable'>
-            {(provided) => (
-              <div
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {this.state.items.map((item, index) => (
-                  <Draggable
-                    key={item._id}
-                    draggableId={item._id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <Card moveFn={this.moveFn}{...item} />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-      </Page>
-    );
-  }
-}
+const Inbox = ({ inbox, type }) => (
+  <Page type={type}>
+    <List list={inbox} />
+  </Page>
+);
 
 Inbox.propTypes = {
   type: PropTypes.oneOf(['form', 'details', null]),
@@ -108,10 +20,4 @@ Inbox.defaultProps = {
 
 const mapStateToProps = ({ inbox }) => ({ inbox });
 
-const mapDispatchToProps = (dispatch) => ({
-  fetch: () => (dispatch(fetch())),
-  update: (content, _id) => dispatch(update(content, _id)),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)
-  (Inbox);
+export default connect(mapStateToProps)(Inbox);
