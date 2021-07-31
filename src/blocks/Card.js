@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { update } from 'actions';
+import { update } from 'actions/Inbox';
 import styled from 'styled-components';
 import { FaCheck, FaAlignCenter } from 'react-icons/fa';
 import { FaProjectDiagram, FaRegCalendar } from 'react-icons/fa';

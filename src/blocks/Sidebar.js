@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { reset } from 'actions';
+import { reset } from 'actions/Inbox';
 import { NavLink } from 'react-router-dom';
-import { FaRegCalendar, FaProjectDiagram } from 'react-icons/fa';
-import { FaList, FaSignOutAlt, FaTimes } from 'react-icons/fa';
+import { FaRegCalendar, FaSignOutAlt } from 'react-icons/fa';
+import { FaList, FaProjectDiagram } from 'react-icons/fa';
 import Button from 'elements/Button';
 import Title from 'elements/Title';
 import Text from 'elements/Text';
-import Logo from 'assets/Logo.png';
+import Logo from 'files/logo.png';
 import contextor from 'contextor';
 
 const List = styled.ul`
@@ -18,7 +18,7 @@ const List = styled.ul`
   padding: 0;
 `;
 
-const Sidebar = ({ module, sidebarFn, reset }) => (
+const Sidebar = ({ module, reset }) => (
   <div className='mx-auto'>
     <Title as={NavLink} to='/inbox'>
       <img className='w-50 mb-3' src={Logo} alt='Logo' />

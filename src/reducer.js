@@ -1,6 +1,6 @@
-import { regSUCCESS, authSUCCESS, fetchSUCCESS } from 'actions';
-import { addSUCCESS, updateSUCCESS } from 'actions';
-import { removeSUCCESS, resetSUCCESS } from 'actions';
+import { regSUCCESS, authSUCCESS, fetchSUCCESS } from 'actions/Inbox';
+import { addSUCCESS, updateSUCCESS } from 'actions/Inbox';
+import { removeSUCCESS, resetSUCCESS } from 'actions/Inbox';
 import storage from 'redux-persist/lib/storage';
 
 const reducer = (state, action) => {

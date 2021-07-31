@@ -7,7 +7,7 @@ import List from 'templates/List';
 
 const Projects = ({ projects, type }) => (
   <Page type={type}>
-    {projects.map(item => (
+    {projects != undefined && projects.map(item => (
       <Project
         key={item._id}
         name={item.name}

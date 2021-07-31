@@ -3,18 +3,18 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { routes } from 'routes';
 import { connect } from 'react-redux';
-import { reg } from 'actions';
+import { reg } from 'actions/Inbox';
 import { Formik, Form } from 'formik';
 import Start from 'templates/Start';
 import Title from 'elements/Title';
 import Button from 'elements/Button';
 import Input from 'elements/Input';
-import Logo from 'assets/Logo.png';
+import Logo from 'files/logo.png';
 
 const Register = ({ registered, reg }) => (
   <Start>
-    <Title className='m-3'>
-      <img className='w-50 p-3' src={Logo} alt='Logo' />
+    <Title className='m-1 m-md-3'>
+      <img className='w-50 p-1 p-md-3' src={Logo} alt='Logo' />
     </Title>
     <Title secondary>Register</Title>
     <div className='my-5'>

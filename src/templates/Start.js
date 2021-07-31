@@ -12,8 +12,8 @@ const Wrapper = styled(Container)`
 
 const Start = ({ children }) => (
   <div>
-    <Wrapper fluid className='text-center'>
-      <Row className='p-5'>
+    <Wrapper fluid className='position-fixed h-100'>
+      <Row className='p-5 text-center'>
         <Col className='mx-5 px-5'>
           {children}
         </Col>
@@ -26,7 +26,7 @@ const Start = ({ children }) => (
           </Title>
           <Text className='my-2'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Quisque interdum pretium sagittis. Cras egestas aliquam suscipit.
+            Quisque interdum pretium sagittis.
           </Text>
           <hr className='my-4' />
           <Title className='my-2'>
@@ -34,7 +34,7 @@ const Start = ({ children }) => (
           </Title>
           <Text className='my-2'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Quisque interdum pretium sagittis. Cras egestas aliquam suscipit.
+            Quisque interdum pretium sagittis.
           </Text>
           <hr className='my-4' />
           <Title className='my-2'>
@@ -42,7 +42,7 @@ const Start = ({ children }) => (
           </Title>
           <Text className='my-2'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Quisque interdum pretium sagittis. Cras egestas aliquam suscipit.
+            Quisque interdum pretium sagittis.
           </Text>
         </Col>
       </Row>

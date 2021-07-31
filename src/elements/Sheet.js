@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { add, update, remove } from 'actions';
+import { add, update, remove } from 'actions/Inbox';
 import { FaAngleUp, FaAngleDown, FaTrash } from 'react-icons/fa';
 import { FaRegCalendar, FaRegClock } from 'react-icons/fa';
 import { FaProjectDiagram, FaUndo } from 'react-icons/fa';
