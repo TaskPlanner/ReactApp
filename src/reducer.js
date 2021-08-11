@@ -18,16 +18,24 @@ const reducer = (state, action) => {
     case fetchSUCCESS:
       return {
         ...state,
-        inbox: [...action.payload.data],
-        projects: [
-          {
-            _id: '1',
-            name: 'Task Planner',
-            data: [...action.payload.data].filter(
-              item => item.project == 'Task Planner'
-            ),
-          },
+        inbox: [
+          ...action.payload.data
         ],
+        planner: [...new Set([
+          ...action.payload.data
+        ].map(i => i.date))].map((i) => ({
+          _id: i, name: i,
+          data: [
+            ...action.payload.data
+          ].filter(item => item.date == i),
+        })),
+        projects: [...new Set([
+          ...action.payload.data
+        ].map(i => i.project))].map((i) => ({
+          _id: i, name: i, data: [
+            ...action.payload.data
+          ].filter(item => item.project == i),
+        })),
       };
     case addSUCCESS:
       return {
@@ -35,17 +43,21 @@ const reducer = (state, action) => {
         inbox: [
           ...state.inbox, action.payload.data
         ],
-        projects: [
-          {
-            _id: '1',
-            name: 'Task Planner',
-            data: [
-              ...state.inbox, action.payload.data
-            ].filter(
-              item => item.project == 'Task Planner'
-            ),
-          },
-        ],
+        planner: [...new Set([
+          ...state.inbox, action.payload.data
+        ].map(i => i.date))].map((i) => ({
+          _id: i, name: i,
+          data: [
+            ...state.inbox, action.payload.data
+          ].filter(item => item.date == i),
+        })),
+        projects: [...new Set([
+          ...state.inbox, action.payload.data
+        ].map(i => i.project))].map((i) => ({
+          _id: i, name: i, data: [
+            ...state.inbox, action.payload.data
+          ].filter(item => item.project == i),
+        })),
       };
     case updateSUCCESS:
       return {
@@ -56,20 +68,33 @@ const reducer = (state, action) => {
               action.payload.data : item
           ),
         ],
-        projects: [
-          {
-            _id: '1',
-            name: 'Task Planner',
-            data: [
-              ...state.inbox.map(
-                item => item._id === action.payload._id ?
-                  action.payload.data : item
-              ),
-            ].filter(
-              item => item.project == 'Task Planner'
+        planner: [...new Set([
+          ...state.inbox.map(
+            item => item._id === action.payload._id ?
+              action.payload.data : item
+          ),
+        ].map(i => i.date))].map((i) => ({
+          _id: i, name: i,
+          data: [
+            ...state.inbox.map(
+              item => item._id === action.payload._id ?
+                action.payload.data : item
             ),
-          },
-        ],
+          ].filter(item => item.date == i),
+        })),
+        projects: [...new Set([
+          ...state.inbox.map(
+            item => item._id === action.payload._id ?
+              action.payload.data : item
+          ),
+        ].map(i => i.project))].map((i) => ({
+          _id: i, name: i, data: [
+            ...state.inbox.map(
+              item => item._id === action.payload._id ?
+                action.payload.data : item
+            ),
+          ].filter(item => item.project == i),
+        })),
       };
     case removeSUCCESS:
       return {
@@ -79,19 +104,29 @@ const reducer = (state, action) => {
             item => item._id !== action.payload._id
           ),
         ],
-        projects: [
-          {
-            _id: '1',
-            name: 'Task Planner',
-            data: [
-              ...state.inbox.filter(
-                item => item._id !== action.payload._id
-              ),
-            ].filter(
-              item => item.project == 'Task Planner'
+        planner: [...new Set([
+          ...state.inbox.filter(
+            item => item._id !== action.payload._id
+          ),
+        ].map(i => i.date))].map((i) => ({
+          _id: i, name: i,
+          data: [
+            ...state.inbox.filter(
+              item => item._id !== action.payload._id
             ),
-          },
-        ],
+          ].filter(item => item.date == i),
+        })),
+        projects: [...new Set([
+          ...state.inbox.filter(
+            item => item._id !== action.payload._id
+          ),
+        ].map(i => i.project))].map((i) => ({
+          _id: i, name: i, data: [
+            ...state.inbox.filter(
+              item => item._id !== action.payload._id
+            ),
+          ].filter(item => item.project == i),
+        })),
       };
     case resetSUCCESS:
       storage.removeItem('persist:root');

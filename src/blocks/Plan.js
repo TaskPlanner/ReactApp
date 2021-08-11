@@ -13,8 +13,8 @@ const Wrapper = styled.div`
 `;
 
 const IconPlan = styled(FaRegClock)`
-  color: ${({ theme }) => (theme.blue100)};
-  font-size: 2rem;
+  color: ${({ theme }) => (theme.blue200)};
+  font-size: 1.6rem;
 `;
 
 const Plan = ({ children, name }) => {
@@ -51,7 +51,6 @@ const Plan = ({ children, name }) => {
 }
 
 Plan.propTypes = {
-  children: PropTypes.array.isRequired,
   name: PropTypes.string,
 };
 
