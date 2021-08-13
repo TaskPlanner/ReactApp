@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FaRegClock, FaSearch } from 'react-icons/fa';
+import { FaRegClock } from 'react-icons/fa';
+import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { Collapse } from 'react-bootstrap';
 import Button from 'elements/Button';
 import Title from 'elements/Title';
@@ -9,6 +10,7 @@ import Text from 'elements/Text';
 
 const Wrapper = styled.div`
   padding: 1rem;
+  padding-top: 1.5rem;
   padding-bottom: 0;
 `;
 
@@ -18,7 +20,8 @@ const IconPlan = styled(FaRegClock)`
 `;
 
 const Plan = ({ children, name }) => {
-  const [open, setOpen] = useState(true);
+  const today = new Date().toISOString().slice(0, 10);
+  const [open, setOpen] = useState(name == today ? true : false);
 
   return (
     <div>
@@ -34,8 +37,9 @@ const Plan = ({ children, name }) => {
             </div>
           </div>
           <div className='my-auto'>
-            <Button secondary onClick={() => setOpen(!open)} >
-              <FaSearch className='pb-1' /> Details
+            <Button s type='button'
+              onClick={() => setOpen(!open)}>
+              {open ? <FaAngleUp /> : <FaAngleDown />}
             </Button>
           </div>
         </div>
@@ -55,7 +59,7 @@ Plan.propTypes = {
 };
 
 Plan.defaultProps = {
-  name: '01.01.2021',
+  name: '01-01-2021',
 };
 
 export default Plan;

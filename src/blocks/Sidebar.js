@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { reset } from 'actions/Inbox';
+import { reset } from 'actions';
 import { NavLink } from 'react-router-dom';
 import { FaRegCalendar, FaSignOutAlt } from 'react-icons/fa';
 import { FaList, FaProjectDiagram } from 'react-icons/fa';

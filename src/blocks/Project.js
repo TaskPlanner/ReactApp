@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FaRegFolder, FaSearch, FaPlus } from 'react-icons/fa';
+import { FaRegFolder } from 'react-icons/fa';
+import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { Collapse } from 'react-bootstrap';
-import Adding from 'elements/Adding';
 import Button from 'elements/Button';
 import Title from 'elements/Title';
 import Text from 'elements/Text';
 
 const Wrapper = styled.div`
   padding: 1rem;
+  padding-top: 1.5rem;
   padding-bottom: 0;
 `;
 
@@ -35,8 +36,9 @@ const Project = ({ children, name }) => {
             </div>
           </div>
           <div className='my-auto'>
-            <Button secondary onClick={() => setOpen(!open)} >
-              <FaSearch className='pb-1' /> Details
+            <Button s type='button'
+              onClick={() => setOpen(!open)}>
+              {open ? <FaAngleUp /> : <FaAngleDown />}
             </Button>
           </div>
         </div>
@@ -45,9 +47,6 @@ const Project = ({ children, name }) => {
       <Collapse in={open}>
         <div className='mx-4'>
           {children}
-          <Adding module='projects' secondary className='m-3'>
-            <FaPlus className='pb-1' /> Add Task / Note to Project
-          </Adding>
         </div>
       </Collapse>
     </div>

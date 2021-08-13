@@ -1,6 +1,6 @@
-import { regSUCCESS, authSUCCESS, fetchSUCCESS } from 'actions/Inbox';
-import { addSUCCESS, updateSUCCESS } from 'actions/Inbox';
-import { removeSUCCESS, resetSUCCESS } from 'actions/Inbox';
+import { regSUCCESS, authSUCCESS, fetchSUCCESS } from 'actions';
+import { addSUCCESS, updateSUCCESS } from 'actions';
+import { removeSUCCESS, resetSUCCESS } from 'actions';
 import storage from 'redux-persist/lib/storage';
 
 const reducer = (state, action) => {
@@ -23,7 +23,7 @@ const reducer = (state, action) => {
         ],
         planner: [...new Set([
           ...action.payload.data
-        ].map(i => i.date))].map((i) => ({
+        ].map(i => i.date))].sort().map((i) => ({
           _id: i, name: i,
           data: [
             ...action.payload.data
@@ -45,7 +45,7 @@ const reducer = (state, action) => {
         ],
         planner: [...new Set([
           ...state.inbox, action.payload.data
-        ].map(i => i.date))].map((i) => ({
+        ].map(i => i.date))].sort().map((i) => ({
           _id: i, name: i,
           data: [
             ...state.inbox, action.payload.data
@@ -73,7 +73,7 @@ const reducer = (state, action) => {
             item => item._id === action.payload._id ?
               action.payload.data : item
           ),
-        ].map(i => i.date))].map((i) => ({
+        ].map(i => i.date))].sort().map((i) => ({
           _id: i, name: i,
           data: [
             ...state.inbox.map(
@@ -108,7 +108,7 @@ const reducer = (state, action) => {
           ...state.inbox.filter(
             item => item._id !== action.payload._id
           ),
-        ].map(i => i.date))].map((i) => ({
+        ].map(i => i.date))].sort().map((i) => ({
           _id: i, name: i,
           data: [
             ...state.inbox.filter(

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { connect } from 'react-redux';
-import { fetch, update } from 'actions/Inbox';
+import { fetch, update } from 'actions';
 import Card from 'blocks/Card';
 
 class List extends Component {

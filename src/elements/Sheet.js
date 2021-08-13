@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { add, update, remove } from 'actions/Inbox';
-import { FaAngleUp, FaAngleDown, FaTrash } from 'react-icons/fa';
+import { add, update, remove } from 'actions';
 import { FaRegCalendar, FaRegClock } from 'react-icons/fa';
+import { FaAngleUp, FaAngleDown, FaTrash } from 'react-icons/fa';
 import { FaProjectDiagram, FaUndo } from 'react-icons/fa';
 import { Collapse } from 'react-bootstrap';
 import { Formik, Form } from 'formik';

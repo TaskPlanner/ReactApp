@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { routes } from 'routes';
 import { connect } from 'react-redux';
-import { auth } from 'actions/Inbox';
+import { auth } from 'actions';
 import { Formik, Form } from 'formik';
 import Start from 'templates/Start';
 import Title from 'elements/Title';
