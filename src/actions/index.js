@@ -23,7 +23,7 @@ export const reg = (username, password) =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   }
 
@@ -41,7 +41,7 @@ export const auth = (username, password) =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   }
 
@@ -62,7 +62,7 @@ export const fetch = () =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   }
 
@@ -83,7 +83,7 @@ export const add = (content) =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   };
 
@@ -104,7 +104,7 @@ export const update = (content, _id) =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   }
 
@@ -124,7 +124,7 @@ export const remove = (_id) =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   }
 

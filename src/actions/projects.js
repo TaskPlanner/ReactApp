@@ -24,7 +24,7 @@ export const proFetch = () =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   }
 
@@ -45,7 +45,7 @@ export const proAdd = (content) =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   };
 
@@ -66,7 +66,7 @@ export const proUpdate = (content, _id) =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   }
 
@@ -86,6 +86,6 @@ export const proRemove = (_id) =>
       .catch(err => {
         console.log(err);
         dispatch({ type: RESET });
-        //window.location.reload();
+        window.location.reload();
       });
   }
