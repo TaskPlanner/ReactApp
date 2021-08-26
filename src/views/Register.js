@@ -16,7 +16,7 @@ const Register = ({ registered, reg }) => (
     <Title className='m-1 m-md-3'>
       <img className='w-50 p-1 p-md-3' src={Logo} alt='Logo' />
     </Title>
-    <Title secondary>Register</Title>
+    <Title l>Register</Title>
     <div className='my-5'>
       <Formik
         initialValues={{}}

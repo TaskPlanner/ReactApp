@@ -16,14 +16,12 @@ const Heading = ({ module, sidebarFn }) => (
         </Button>
       </div>
       <div className='my-auto text-center text-md-left'>
-        <Title secondary>Task Planner | {module}</Title>
+        <Title l>Task Planner | {module}</Title>
         <Text>Lorem ipsum dolor sit amet.</Text>
       </div>
       <div className='my-auto'>
         <Text className='d-none d-md-inline m-2'>
-          {module === 'inbox' && 'Add new Task'}
-          {module === 'planner' && 'Add new Event'}
-          {module === 'projects' && 'Add new Project'}
+          Add new task
         </Text>
         <Adding xl><FaPlus /></Adding>
       </div>

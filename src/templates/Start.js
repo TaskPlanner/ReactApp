@@ -18,7 +18,7 @@ const Start = ({ children }) => (
           {children}
         </Col>
         <Col className='m-5 p-5'>
-          <Title secondary className='mb-5'>
+          <Title l className='mb-5'>
             Task Planner
           </Title>
           <Title className='my-2'>

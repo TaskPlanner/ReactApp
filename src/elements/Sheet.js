@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { add, update, remove } from 'actions';
+import { proAdd } from 'actions/projects';
+import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
 import { FaRegCalendar, FaRegClock } from 'react-icons/fa';
-import { FaAngleUp, FaAngleDown, FaTrash } from 'react-icons/fa';
-import { FaProjectDiagram, FaUndo } from 'react-icons/fa';
+import { FaProjectDiagram, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaMinus } from 'react-icons/fa';
 import { Collapse } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
 import Text from 'elements/Text';
@@ -13,10 +15,11 @@ import Input from 'elements/Input';
 import Comments from 'blocks/Comments';
 import Format from 'format';
 
-const Sheet = ({ add, update, remove, item, module }) => {
+const Sheet = ({ add, update, remove, proAdd, item, module, projects }) => {
   const [openOpt, setOpenOpt] = useState(true);
   const [openCom, setOpenCom] = useState(true);
   const [redirect, setRedirect] = useState(false);
+  const [addPro, setAddPro] = useState(false);
   const [inbox, setInbox] = useState(true);
   const [type, setType] = useState('task');
 
@@ -39,10 +42,11 @@ const Sheet = ({ add, update, remove, item, module }) => {
                     ({ text: i.text, state: i.state }))
                 }, item._id) :
                 add({
-                  ...values, state: 0, position: -1, type: type, inbox: inbox,
+                  ...values, state: 0, position: 0, type: type, inbox: inbox,
                   comments: context.state.comments.map((i) =>
                     ({ text: i.text, state: i.state }))
                 });
+              addPro && proAdd({ title: values.project, position: 0 });
               setRedirect(true);
             }}>
             {({ values, handleChange }) => (
@@ -102,32 +106,27 @@ const Sheet = ({ add, update, remove, item, module }) => {
                       />
                     </div>
                     <div className='d-flex'>
-                      <FaUndo className='ml-3 my-auto' />
-                      <Input
-                        as='select'
-                        name='iterate'
-                        value={values.iterate}
-                        onChange={handleChange}
-                      >
-                        <option value='add iterate'>iterate...</option>
-                        <option value='once a day'>once a day</option>
-                        <option value='once a week'>once a week</option>
-                        <option value='once a month'>once a month</option>
-                      </Input>
-                    </div>
-                    <div className='d-flex'>
                       <FaProjectDiagram className='ml-3 my-auto' />
-                      <Input
+                      {addPro ? <Input
+                        autoComplete='off'
+                        name='project'
+                        placeholder='project...'
+                        defaultValue={values.project}
+                        onChange={handleChange}
+                      /> : <Input
                         as='select'
                         name='project'
                         value={values.project}
                         onChange={handleChange}
                       >
                         <option value='add project'>project...</option>
-                        <option value='Task Planner'>Task Planner</option>
-                        <option value='Project System'>Project System</option>
-                        <option value='Example Project'>Example Project</option>
-                      </Input>
+                        {projects.map(i =>
+                          <option key={i._id} value={i.title}>{i.title}</option>)}
+                      </Input>}
+                      <Button s type='button' className='mr-1 ml-auto'
+                        onClick={() => setAddPro(!addPro)}>
+                        {addPro ? <FaMinus className='p-1' /> : <FaPlus className='p-1' />}
+                      </Button>
                     </div>
                   </div>
                 </Collapse>
@@ -165,11 +164,14 @@ const Sheet = ({ add, update, remove, item, module }) => {
   );
 }
 
+const mapStateToProps = ({ projects }) => ({ projects });
+
 const mapDispatchToProps = (dispatch) => ({
   add: (content) => dispatch(add(content)),
-  update: (content, _id) =>
-    dispatch(update(content, _id)),
+  update: (content, _id) => dispatch(update(content, _id)),
   remove: (_id) => dispatch(remove(_id)),
+  proAdd: (content) => dispatch(proAdd(content)),
 });
 
-export default connect(null, mapDispatchToProps)(Sheet);
+export default connect(mapStateToProps, mapDispatchToProps)
+  (Sheet);

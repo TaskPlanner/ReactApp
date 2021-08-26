@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { update } from 'actions';
-import styled from 'styled-components';
-import { FaCheck, FaAlignCenter } from 'react-icons/fa';
+import { Redirect } from 'react-router-dom';
 import { FaProjectDiagram, FaRegCalendar } from 'react-icons/fa';
 import { FaRegClock, FaRegCheckSquare } from 'react-icons/fa';
+import { FaCheck, FaAlignCenter } from 'react-icons/fa';
 import Button from 'elements/Button';
 import Title from 'elements/Title';
 import Text from 'elements/Text';
@@ -81,9 +81,9 @@ class Card extends Component {
                 <IconTask className='mb-2 mr-2' />
                 <Title className='d-inline-block mr-2'>{title}</Title>
                 <Text className='d-inline-block mb-1'>
-                  <FaRegCalendar className='ml-1 mb-1' /> {date} |
-                  <FaRegClock className='ml-1 mb-1' /> {time} |
-                  <FaProjectDiagram className='ml-1 mb-1' /> {project}
+                  {date && <FaRegCalendar className='ml-2 mb-1' />} {date}
+                  {time && <FaRegClock className='ml-2 mb-1' />} {time}
+                  {project && <FaProjectDiagram className='ml-2 mb-1' />} {project}
                 </Text>
               </div>
             </div>
@@ -116,9 +116,6 @@ Card.propTypes = {
   type: PropTypes.oneOf(['task', 'note']),
   _id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  date: PropTypes.string,
-  time: PropTypes.string,
-  project: PropTypes.string,
 };
 
 Card.defaultProps = {
@@ -126,9 +123,6 @@ Card.defaultProps = {
   type: 'task',
   _id: '0',
   title: 'Example Task',
-  date: 'add date',
-  time: 'add time',
-  project: 'add project',
 };
 
 const mapDispatchToProps = (dispatch) => ({

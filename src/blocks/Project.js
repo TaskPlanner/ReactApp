@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FaRegFolder } from 'react-icons/fa';
+import { update } from 'actions';
+import { proUpdate, proRemove } from 'actions/projects';
+import { FaTrash, FaEdit } from 'react-icons/fa';
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
+import { FaRegFolder, FaTimes } from 'react-icons/fa';
 import { Collapse } from 'react-bootstrap';
+import { Formik, Form } from 'formik';
 import Button from 'elements/Button';
 import Title from 'elements/Title';
-import Text from 'elements/Text';
+import Input from 'elements/Input';
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -19,8 +24,9 @@ const IconProject = styled(FaRegFolder)`
   font-size: 1.6rem;
 `;
 
-const Project = ({ children, name }) => {
+const Project = ({ children, list, title, _id, update, proUpdate, proRemove }) => {
   const [open, setOpen] = useState(false);
+  const [editPro, setEditPro] = useState(false);
 
   return (
     <div>
@@ -30,14 +36,48 @@ const Project = ({ children, name }) => {
             <div className='my-auto mr-3'>
               <IconProject />
             </div>
-            <div onClick={() => setOpen(!open)} className='my-auto'>
-              <Title>{name}</Title>
-              <Text>Lorem ipsum dolor sit amet</Text>
-            </div>
+            {editPro ? <>
+              <Formik initialValues={{ title }}
+                onSubmit={values => {
+                  list.map(i => update({ project: values.title }, i._id));
+                  proUpdate({ ...values }, _id);
+                  setEditPro(!editPro);
+                }}>
+                {({ values, handleChange }) => (
+                  <Form>
+                    <Input
+                      className='p-2'
+                      radius={1}
+                      autoComplete='off'
+                      name='title'
+                      placeholder='Edit project...'
+                      value={values.title}
+                      onChange={handleChange}
+                    />
+                    <Button className='p-2 ml-2' type='submit'>
+                      Edit project
+                    </Button>
+                  </Form>
+                )}
+              </Formik>
+              <Button s onClick={() => setEditPro(!editPro)}>
+                <FaTimes className='pb-1' />
+              </Button>
+            </> : <>
+              <div onClick={() => setOpen(!open)} className='my-auto mr-2'>
+                <Title>{title}</Title>
+              </div>
+              <Button s onClick={() => setEditPro(!editPro)}>
+                <FaEdit className='pb-1' />
+              </Button>
+            </>}
+            <Button s onClick={() => {
+              proRemove(_id); list.map(i => update({ project: '' }, i._id));
+            }}> <FaTrash className='pb-1' />
+            </Button>
           </div>
           <div className='my-auto'>
-            <Button s type='button'
-              onClick={() => setOpen(!open)}>
+            <Button s onClick={() => setOpen(!open)}>
               {open ? <FaAngleUp /> : <FaAngleDown />}
             </Button>
           </div>
@@ -45,20 +85,25 @@ const Project = ({ children, name }) => {
         <hr className='mb-0 mt-3' />
       </Wrapper>
       <Collapse in={open}>
-        <div className='mx-4'>
-          {children}
-        </div>
+        <div className='mx-4'>{children}</div>
       </Collapse>
     </div>
   );
 }
 
 Project.propTypes = {
-  name: PropTypes.string,
+  title: PropTypes.string,
 };
 
 Project.defaultProps = {
-  name: 'Example Project',
+  title: 'Example Project',
 };
 
-export default Project;
+const mapDispatchToProps = (dispatch) => ({
+  update: (content, _id) => dispatch(update(content, _id)),
+  proUpdate: (content, _id) => dispatch(proUpdate(content, _id)),
+  proRemove: (_id) => dispatch(proRemove(_id)),
+});
+
+export default connect(null, mapDispatchToProps)
+  (Project);

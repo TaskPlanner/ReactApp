@@ -1,17 +1,14 @@
 import axios from 'axios';
 import { url } from 'routes';
 
-export const fetchREQUEST = 'fetchREQUEST';
-export const fetchSUCCESS = 'fetchSUCCESS';
+export const proFETCH = 'proFETCH';
+export const proADD = 'proADD';
+export const proUPDATE = 'proUPDATE';
+export const proREMOVE = 'proREMOVE';
+export const RESET = 'RESET';
 
-export const addREQUEST = 'addREQUEST';
-export const addSUCCESS = 'addSUCCESS';
-
-export const resetSUCCESS = 'resetSUCCESS';
-
-export const fetch = () =>
+export const proFetch = () =>
   (dispatch, getState) => {
-    dispatch({ type: fetchREQUEST });
     return axios({
       method: "GET",
       withCredentials: true,
@@ -20,20 +17,19 @@ export const fetch = () =>
     })
       .then(({ data }) => {
         dispatch({
-          type: fetchSUCCESS,
+          type: proFETCH,
           payload: { data }
         });
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: resetSUCCESS });
-        window.location.reload();
+        dispatch({ type: RESET });
+        //window.location.reload();
       });
   }
 
-export const add = (content) =>
+export const proAdd = (content) =>
   (dispatch, getState) => {
-    dispatch({ type: addREQUEST });
     return axios({
       method: "POST",
       withCredentials: true,
@@ -42,13 +38,54 @@ export const add = (content) =>
     })
       .then(({ data }) => {
         dispatch({
-          type: addSUCCESS,
+          type: proADD,
           payload: { data },
         });
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: resetSUCCESS });
-        window.location.reload();
+        dispatch({ type: RESET });
+        //window.location.reload();
       });
   };
+
+export const proUpdate = (content, _id) =>
+  (dispatch, getState) => {
+    return axios({
+      method: "PUT",
+      withCredentials: true,
+      url: url + '/projects/' + _id,
+      data: { userId: getState().user, ...content },
+    })
+      .then(({ data }) => {
+        dispatch({
+          type: proUPDATE,
+          payload: { data, _id },
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: RESET });
+        //window.location.reload();
+      });
+  }
+
+export const proRemove = (_id) =>
+  (dispatch) => {
+    return axios({
+      method: "DELETE",
+      withCredentials: true,
+      url: url + '/projects/' + _id,
+    })
+      .then(() => {
+        dispatch({
+          type: proREMOVE,
+          payload: { _id },
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch({ type: RESET });
+        //window.location.reload();
+      });
+  }

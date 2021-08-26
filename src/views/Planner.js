@@ -7,10 +7,10 @@ import List from 'templates/List';
 
 const Planner = ({ planner, type }) => (
   <Page type={type}>
-    {planner != undefined && planner.map(item => (
+    {planner != undefined && planner.map(item => item._id && (
       <Plan
         key={item._id}
-        name={item.name}
+        title={item.title}
       >
         <List list={item.data} />
       </Plan>

@@ -1,136 +1,142 @@
-import { regSUCCESS, authSUCCESS, fetchSUCCESS } from 'actions';
-import { addSUCCESS, updateSUCCESS } from 'actions';
-import { removeSUCCESS, resetSUCCESS } from 'actions';
+import { REG, AUTH, RESET, FETCH } from 'actions';
+import { ADD, UPDATE, REMOVE } from 'actions';
+import { proFETCH, proADD } from 'actions/projects';
+import { proUPDATE, proREMOVE } from 'actions/projects';
 import storage from 'redux-persist/lib/storage';
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case regSUCCESS:
+    case REG:
+      return { ...state, registered: true };
+    case AUTH:
+      return { ...state, user: action.payload.data._id };
+    case FETCH:
       return {
         ...state,
-        registered: true,
+        inbox: [...action.payload.data],
+        planner: [...new Set([...action.payload.data].map(
+          i => i.date))].sort().map((i) => ({
+            _id: i, title: i,
+            data: [...action.payload.data].filter(item => item.date == i),
+          })),
       };
-    case authSUCCESS:
+    case proFETCH:
       return {
         ...state,
-        user: action.payload.data._id,
+        projects: [...action.payload.data].map((i) => ({
+          _id: i._id, title: i.title, position: i.position,
+          data: [...state.inbox].filter(item => item.project == i.title),
+        })),
       };
-    case fetchSUCCESS:
+    case ADD:
+      [...state.inbox].map(i => i.position++);
       return {
         ...state,
-        inbox: [
-          ...action.payload.data
-        ],
-        planner: [...new Set([
-          ...action.payload.data
-        ].map(i => i.date))].sort().map((i) => ({
-          _id: i, name: i,
-          data: [
-            ...action.payload.data
-          ].filter(item => item.date == i),
-        })),
-        projects: [...new Set([
-          ...action.payload.data
-        ].map(i => i.project))].map((i) => ({
-          _id: i, name: i, data: [
-            ...action.payload.data
-          ].filter(item => item.project == i),
+        inbox: [...state.inbox, action.payload.data],
+        planner: [...new Set([...state.inbox, action.payload.data].map(
+          i => i.date))].sort().map((i) => ({
+            _id: i, title: i,
+            data: [...state.inbox, action.payload.data].filter(item => item.date == i),
+          })),
+        projects: [...state.projects].map((i) => ({
+          _id: i._id, title: i.title, position: i.position,
+          data: [...state.inbox, action.payload.data].filter(item => item.project == i.title)
         })),
       };
-    case addSUCCESS:
+    case proADD:
+      [...state.projects].map(i => i.position++);
       return {
         ...state,
-        inbox: [
-          ...state.inbox, action.payload.data
-        ],
-        planner: [...new Set([
-          ...state.inbox, action.payload.data
-        ].map(i => i.date))].sort().map((i) => ({
-          _id: i, name: i,
-          data: [
-            ...state.inbox, action.payload.data
-          ].filter(item => item.date == i),
-        })),
-        projects: [...new Set([
-          ...state.inbox, action.payload.data
-        ].map(i => i.project))].map((i) => ({
-          _id: i, name: i, data: [
-            ...state.inbox, action.payload.data
-          ].filter(item => item.project == i),
+        projects: [...state.projects, action.payload.data].map((i) => ({
+          _id: i._id, title: i.title, position: i.position,
+          data: [...state.inbox].filter(item => item.project == i.title)
         })),
       };
-    case updateSUCCESS:
+    case UPDATE:
       return {
         ...state,
-        inbox: [
-          ...state.inbox.map(
-            item => item._id === action.payload._id ?
-              action.payload.data : item
-          ),
-        ],
-        planner: [...new Set([
-          ...state.inbox.map(
-            item => item._id === action.payload._id ?
-              action.payload.data : item
-          ),
-        ].map(i => i.date))].sort().map((i) => ({
-          _id: i, name: i,
-          data: [
-            ...state.inbox.map(
-              item => item._id === action.payload._id ?
-                action.payload.data : item
-            ),
-          ].filter(item => item.date == i),
+        inbox: [...state.inbox.map(
+          item => item._id === action.payload._id ? action.payload.data : item
+        )],
+        planner: [...new Set([...state.inbox.map(
+          item => item._id === action.payload._id ? action.payload.data : item
+        )].map(i => i.date))].sort().map((i) => ({
+          _id: i, title: i,
+          data: [...state.inbox.map(
+            item => item._id === action.payload._id ? action.payload.data : item
+          )].filter(item => item.date == i),
         })),
-        projects: [...new Set([
-          ...state.inbox.map(
-            item => item._id === action.payload._id ?
-              action.payload.data : item
-          ),
-        ].map(i => i.project))].map((i) => ({
-          _id: i, name: i, data: [
-            ...state.inbox.map(
-              item => item._id === action.payload._id ?
-                action.payload.data : item
-            ),
-          ].filter(item => item.project == i),
+        projects: [...state.projects].map((i) => ({
+          _id: i._id, title: i.title, position: i.position,
+          data: [...state.inbox.map(
+            item => item._id === action.payload._id ? action.payload.data : item
+          )].filter(item => item.project == i.title)
         })),
       };
-    case removeSUCCESS:
+    case proUPDATE:
+      const updatePro = [...state.projects].find(item => item._id == action.payload._id);
+      const updateName = updatePro && updatePro.title;
       return {
         ...state,
-        inbox: [
-          ...state.inbox.filter(
-            item => item._id !== action.payload._id
-          ),
-        ],
-        planner: [...new Set([
-          ...state.inbox.filter(
-            item => item._id !== action.payload._id
-          ),
-        ].map(i => i.date))].sort().map((i) => ({
-          _id: i, name: i,
-          data: [
-            ...state.inbox.filter(
-              item => item._id !== action.payload._id
-            ),
-          ].filter(item => item.date == i),
+        inbox: [...state.inbox.map(item => item.project === updateName ?
+          { ...item, project: action.payload.data.title } : item
+        )],
+        planner: [...new Set([...state.inbox.map(item => item.project === updateName ?
+          { ...item, project: action.payload.data.title } : item
+        )].map(i => i.date))].sort().map((i) => ({
+          _id: i, title: i,
+          data: [...state.inbox.map(item => item.project === updateName ?
+            { ...item, project: action.payload.data.title } : item
+          )].filter(item => item.date == i),
         })),
-        projects: [...new Set([
-          ...state.inbox.filter(
-            item => item._id !== action.payload._id
-          ),
-        ].map(i => i.project))].map((i) => ({
-          _id: i, name: i, data: [
-            ...state.inbox.filter(
-              item => item._id !== action.payload._id
-            ),
-          ].filter(item => item.project == i),
+        projects: [...state.projects.map(
+          item => item._id === action.payload._id ? action.payload.data : item
+        )].map((i) => ({
+          _id: i._id, title: i.title, position: i.position,
+          data: [...state.inbox].filter(item => item.project == i.title)
         })),
       };
-    case resetSUCCESS:
-      storage.removeItem('persist:root');
-      return {};
+    case REMOVE:
+      return {
+        ...state,
+        inbox: [...state.inbox.filter(item => item._id !== action.payload._id)],
+        planner: [...new Set([...state.inbox.filter(item => item._id !== action.payload._id
+        )].map(i => i.date))].sort().map((i) => ({
+          _id: i, title: i,
+          data: [...state.inbox.filter(item => item._id !== action.payload._id
+          )].filter(item => item.date == i),
+        })),
+        projects: [...state.projects].map((i) => ({
+          _id: i._id, title: i.title, position: i.position,
+          data: [...state.inbox.filter(item => item._id !== action.payload._id
+          )].filter(item => item.project == i.title)
+        })),
+      };
+    case proREMOVE:
+      const removePro = [...state.projects].find(item => item._id == action.payload._id);
+      const removeName = removePro && removePro.title;
+      return {
+        ...state,
+        inbox: [...state.inbox.map(
+          item => item.project === removeName ? { ...item, project: null } : item
+        )],
+        planner: [...new Set([...state.inbox.map(
+          item => item.project === removeName ? { ...item, project: null } : item
+        )].map(i => i.date))].sort().map((i) => ({
+          _id: i, title: i,
+          data: [...state.inbox.map(
+            item => item.project === removeName ? { ...item, project: null } : item
+          )].filter(item => item.date == i),
+        })),
+        projects: [...state.projects.filter(
+          item => item._id !== action.payload._id
+        )].map((i) => ({
+          _id: i._id, title: i.title, position: i.position,
+          data: [...state.inbox].filter(item => item.project == i.title)
+        })),
+      };
+    case RESET:
+      storage.removeItem('persist:root'); return {};
     default:
       return state;
   }

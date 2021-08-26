@@ -6,16 +6,18 @@ import Format from 'format';
 import contextor from 'contextor';
 
 class Form extends Component {
-  state = {
-    active: {},
-    comments: [],
+  constructor(props) {
+    super(props);
+    this.state = { active: {}, comments: [] };
+    this.onDragEnd = this.onDragEnd.bind(this);
   };
 
   add = (item) => {
     this.setState(prevState => ({
       comments: [...prevState.comments, {
         _id: `${Math.random().toString(10)}`,
-        text: item ? item : 'Example Comment'
+        text: item ? item : 'Example Comment',
+        state: 0,
       }],
     }));
   };
@@ -26,6 +28,7 @@ class Form extends Component {
         item => item._id === e.target.id ? {
           _id: e.target.id,
           text: e.target.value,
+          state: item.state,
         } : item
       )],
     }));
@@ -39,6 +42,26 @@ class Form extends Component {
     }));
   };
 
+  archive = (_id) => {
+    this.setState(prevState => ({
+      comments: [...prevState.comments.map(
+        item => item._id === _id ? {
+          _id: item._id,
+          text: item.text,
+          state: item.state == 0 ? 1 : 0,
+        } : item
+      )],
+    }));
+  };
+
+  onDragEnd(result) {
+    if (!result.destination) return;
+    const comments = this.state.comments;
+    const [removed] = comments.splice(result.source.index, 1);
+    comments.splice(result.destination.index, 0, removed);
+    this.setState({ comments });
+  };
+
   render() {
     const { module } = this.props;
     const elements = {
@@ -46,6 +69,8 @@ class Form extends Component {
       add: this.add,
       update: this.update,
       remove: this.remove,
+      archive: this.archive,
+      onDragEnd: this.onDragEnd,
     }
 
     return (

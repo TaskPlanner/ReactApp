@@ -1,29 +1,16 @@
 import axios from 'axios';
 import { url } from 'routes';
 
-export const regREQUEST = 'regREQUEST';
-export const regSUCCESS = 'regSUCCESS';
-
-export const authREQUEST = 'authREQUEST';
-export const authSUCCESS = 'authSUCCESS';
-
-export const fetchREQUEST = 'fetchREQUEST';
-export const fetchSUCCESS = 'fetchSUCCESS';
-
-export const addREQUEST = 'addREQUEST';
-export const addSUCCESS = 'addSUCCESS';
-
-export const updateREQUEST = 'updateREQUEST';
-export const updateSUCCESS = 'updateSUCCESS';
-
-export const removeREQUEST = 'removeREQUEST';
-export const removeSUCCESS = 'removeSUCCESS';
-
-export const resetSUCCESS = 'resetSUCCESS';
+export const REG = 'REG';
+export const AUTH = 'AUTH';
+export const FETCH = 'FETCH';
+export const ADD = 'ADD';
+export const UPDATE = 'UPDATE';
+export const REMOVE = 'REMOVE';
+export const RESET = 'RESET';
 
 export const reg = (username, password) =>
   (dispatch) => {
-    dispatch({ type: regREQUEST });
     return axios({
       method: 'POST',
       withCredentials: true,
@@ -31,18 +18,17 @@ export const reg = (username, password) =>
       data: { username, password },
     })
       .then(() => {
-        dispatch({ type: regSUCCESS });
+        dispatch({ type: REG });
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: resetSUCCESS });
-        window.location.reload();
+        dispatch({ type: RESET });
+        //window.location.reload();
       });
   }
 
 export const auth = (username, password) =>
   (dispatch) => {
-    dispatch({ type: authREQUEST });
     return axios({
       method: 'POST',
       withCredentials: true,
@@ -50,18 +36,17 @@ export const auth = (username, password) =>
       data: { username, password },
     })
       .then(payload => {
-        dispatch({ type: authSUCCESS, payload });
+        dispatch({ type: AUTH, payload });
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: resetSUCCESS });
-        window.location.reload();
+        dispatch({ type: RESET });
+        //window.location.reload();
       });
   }
 
 export const fetch = () =>
   (dispatch, getState) => {
-    dispatch({ type: fetchREQUEST });
     return axios({
       method: "GET",
       withCredentials: true,
@@ -70,20 +55,19 @@ export const fetch = () =>
     })
       .then(({ data }) => {
         dispatch({
-          type: fetchSUCCESS,
+          type: FETCH,
           payload: { data }
         });
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: resetSUCCESS });
-        window.location.reload();
+        dispatch({ type: RESET });
+        //window.location.reload();
       });
   }
 
 export const add = (content) =>
   (dispatch, getState) => {
-    dispatch({ type: addREQUEST });
     return axios({
       method: "POST",
       withCredentials: true,
@@ -92,20 +76,19 @@ export const add = (content) =>
     })
       .then(({ data }) => {
         dispatch({
-          type: addSUCCESS,
+          type: ADD,
           payload: { data },
         });
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: resetSUCCESS });
-        window.location.reload();
+        dispatch({ type: RESET });
+        //window.location.reload();
       });
   };
 
 export const update = (content, _id) =>
   (dispatch, getState) => {
-    dispatch({ type: updateREQUEST });
     return axios({
       method: "PUT",
       withCredentials: true,
@@ -114,20 +97,19 @@ export const update = (content, _id) =>
     })
       .then(({ data }) => {
         dispatch({
-          type: updateSUCCESS,
+          type: UPDATE,
           payload: { data, _id },
         });
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: resetSUCCESS });
-        window.location.reload();
+        dispatch({ type: RESET });
+        //window.location.reload();
       });
   }
 
 export const remove = (_id) =>
   (dispatch) => {
-    dispatch({ type: removeREQUEST });
     return axios({
       method: "DELETE",
       withCredentials: true,
@@ -135,17 +117,17 @@ export const remove = (_id) =>
     })
       .then(() => {
         dispatch({
-          type: removeSUCCESS,
+          type: REMOVE,
           payload: { _id },
         });
       })
       .catch(err => {
         console.log(err);
-        dispatch({ type: resetSUCCESS });
-        window.location.reload();
+        dispatch({ type: RESET });
+        //window.location.reload();
       });
   }
 
 export const reset = {
-  type: resetSUCCESS,
+  type: RESET,
 };

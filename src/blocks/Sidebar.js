@@ -23,7 +23,7 @@ const Sidebar = ({ module, reset }) => (
     <Title as={NavLink} to='/inbox'>
       <img className='w-50 mb-3' src={Logo} alt='Logo' />
     </Title>
-    <Title>{module}</Title>
+    <Title l>{module}</Title>
     <Text>Lorem ipsum dolor sit amet.</Text>
     <List>
       <li className='my-2'>

@@ -20,7 +20,7 @@ const Login = ({ user, auth, login }) => (
     <Title className='m-1 m-md-3'>
       <img className='w-50 p-1 p-md-3' src={Logo} alt='Logo' />
     </Title>
-    <Title secondary>Login</Title>
+    <Title l>Login</Title>
     <div className='my-5'>
       <Formik
         initialValues={{}}

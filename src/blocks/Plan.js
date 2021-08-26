@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { FaRegClock } from 'react-icons/fa';
 import { FaAngleUp, FaAngleDown } from 'react-icons/fa';
+import { FaRegClock, FaCalendarDay } from 'react-icons/fa';
 import { Collapse } from 'react-bootstrap';
 import Button from 'elements/Button';
 import Title from 'elements/Title';
@@ -19,9 +19,12 @@ const IconPlan = styled(FaRegClock)`
   font-size: 1.6rem;
 `;
 
-const Plan = ({ children, name }) => {
+const Plan = ({ children, title }) => {
   const today = new Date().toISOString().slice(0, 10);
-  const [open, setOpen] = useState(name == today ? true : false);
+  const [open, setOpen] = useState(title == today ? true : false);
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const day = new Date(title);
+  const name = days[day.getDay()];
 
   return (
     <div>
@@ -31,14 +34,15 @@ const Plan = ({ children, name }) => {
             <div className='my-auto mr-3'>
               <IconPlan />
             </div>
+            <div onClick={() => setOpen(!open)} className='my-auto mr-2'>
+              <Title>{title}</Title>
+            </div>
             <div onClick={() => setOpen(!open)} className='my-auto'>
-              <Title>{name}</Title>
-              <Text>Lorem ipsum dolor sit amet</Text>
+              <Text><FaCalendarDay className='mb-1' /> {name} </Text>
             </div>
           </div>
           <div className='my-auto'>
-            <Button s type='button'
-              onClick={() => setOpen(!open)}>
+            <Button s onClick={() => setOpen(!open)}>
               {open ? <FaAngleUp /> : <FaAngleDown />}
             </Button>
           </div>
@@ -55,11 +59,11 @@ const Plan = ({ children, name }) => {
 }
 
 Plan.propTypes = {
-  name: PropTypes.string,
+  title: PropTypes.string,
 };
 
 Plan.defaultProps = {
-  name: '01-01-2021',
+  title: '2021-01-01',
 };
 
 export default Plan;

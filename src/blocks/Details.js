@@ -11,10 +11,7 @@ import contextor from 'contextor';
 class Details extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      active: {},
-      comments: [],
-    };
+    this.state = { active: {}, comments: [] };
     this.onDragEnd = this.onDragEnd.bind(this);
   };
 

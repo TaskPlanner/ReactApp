@@ -3,6 +3,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import { connect } from 'react-redux';
 import { fetch, update } from 'actions';
+import { proFetch } from 'actions/projects';
 import Card from 'blocks/Card';
 
 class List extends Component {
@@ -15,6 +16,7 @@ class List extends Component {
 
   componentDidMount() {
     this.props.fetch();
+    this.props.proFetch();
   };
 
   componentDidUpdate() {
@@ -97,6 +99,7 @@ class List extends Component {
 const mapDispatchToProps = (dispatch) => ({
   fetch: () => (dispatch(fetch())),
   update: (content, _id) => dispatch(update(content, _id)),
+  proFetch: () => (dispatch(proFetch())),
 })
 
 export default connect(null, mapDispatchToProps)
