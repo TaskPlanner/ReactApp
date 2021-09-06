@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 
 const IconPlan = styled(FaRegClock)`
   color: ${({ theme }) => (theme.blue200)};
-  font-size: 1.6rem;
+  font-size: 1.7rem;
 `;
 
 const Plan = ({ children, title }) => {

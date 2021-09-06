@@ -28,13 +28,13 @@ class List extends Component {
       ))) {
         this.setState({
           items: this.props.list.sort((a, b) =>
-            (a.position > b.position) ? 1 : -1),
+            (Number(a.position) > Number(b.position)) ? 1 : -1),
         });
       }
       if (this.props.list.length != this.state.items.length) {
         this.setState({
           items: this.props.list.sort((a, b) =>
-            (a.position > b.position) ? 1 : -1),
+            (Number(a.position) > Number(b.position)) ? 1 : -1),
         });
       }
     }

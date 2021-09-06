@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 
 const IconTask = styled(FaRegCheckSquare)`
   color: ${({ theme }) => (theme.red100)};
-  font-size: 1.6rem;
+  font-size: 1.7rem;
 `;
 
 const Fade = styled.div`
@@ -32,18 +32,39 @@ const Fade = styled.div`
 class Card extends Component {
   state = {
     redirect: false,
-    task: this.props.state,
     fade: false,
+    inbox: true,
+    task: this.props.state,
   }
 
+  componentDidMount() {
+    if (this.props.inbox != undefined) {
+      if (this.props.inbox == false) {
+        this.props.moveFn(this.props.position);
+        this.setState({ inbox: this.props.inbox });
+      } else {
+        this.setState({ inbox: this.props.inbox });
+      }
+    }
+  };
+
   componentDidUpdate() {
-    if (this.state.redirect === true) {
+    if (this.state.redirect == true) {
       this.setState({ redirect: false });
     }
-    if (this.state.fade === true) {
+    if (this.state.fade == true) {
       this.setState({ fade: false });
     }
-  }
+    if (this.props.inbox != undefined &&
+      this.props.inbox != this.state.inbox) {
+      if (this.props.inbox == false) {
+        this.props.moveFn(this.props.position);
+        this.setState({ inbox: this.props.inbox });
+      } else {
+        this.setState({ inbox: this.props.inbox });
+      }
+    }
+  };
 
   detailsFn = () => this.setState({ redirect: true });
 
@@ -78,18 +99,20 @@ class Card extends Component {
           <div className='d-flex justify-content-between'>
             <div onClick={this.detailsFn} className='d-flex pointer'>
               <div className='my-auto'>
-                <IconTask className='mb-2 mr-2' />
-                <Title className='d-inline-block mr-2'>{title}</Title>
-                <Text className='d-inline-block mb-1'>
+                <IconTask className='mb-1 mr-2' />
+              </div>
+              <div className='my-auto'>
+                <Title className='d-inline mr-2'>{title}</Title>
+                <Text className='d-inline mb-1'>
                   {date && <FaRegCalendar className='ml-2 mb-1' />} {date}
                   {time && <FaRegClock className='ml-2 mb-1' />} {time}
                   {project && <FaProjectDiagram className='ml-2 mb-1' />} {project}
                 </Text>
               </div>
             </div>
-            <div className='my-auto'>
+            <div className='d-flex my-auto'>
               {type === 'task' && <>
-                <Text className='d-none d-md-inline mx-2'>
+                <Text className='d-none d-md-block mx-2 my-auto'>
                   {task == 0 && 'Task'}
                   {task == 1 && 'Progress'}
                   {task == 2 && 'Complete'}
@@ -99,7 +122,7 @@ class Card extends Component {
                   <FaCheck />
                 </Button> </>}
               {type === 'note' && <>
-                <Text className='d-none d-md-inline mx-2'>Note</Text>
+                <Text className='d-none d-md-block mx-2 my-auto'>Note</Text>
                 <Button l className='active'>
                   <FaAlignCenter />
                 </Button> </>}

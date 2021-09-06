@@ -11,7 +11,7 @@ import contextor from 'contextor';
 
 const Aside = styled(Col)`
   background: ${({ theme }) => (theme.gray200)};
-  z-index: ${({ index }) => (index ? '200' : '700')};
+  z-index: ${({ index }) => (index ? '100' : '800')};
   transform: translate(${({ visible }) =>
     (visible ? '0' : '-100%')});
   transition: transform 0.3s ease-in-out;
@@ -20,13 +20,13 @@ const Aside = styled(Col)`
 const Header = styled(Col)`
   background: ${({ theme }) => (theme.gray100)};
   height: 14vh;
-  z-index: 100;
+  z-index: 400;
 `;
 
 const Section = styled(Col)`
   background: ${({ theme }) => (theme.gray200)};
   overflow-y: auto;
-  z-index: 500;
+  z-index: 600;
   margin-left: ${({ visible }) => (!visible && '100%')};
   transition: margin 0.3s ease-in-out;
 `;
@@ -34,20 +34,28 @@ const Section = styled(Col)`
 const Content = styled(Col)`
   height: 86vh;
   margin-top: 14vh;
-  z-index: 400;
+  z-index: 300;
+`;
+
+const Mask = styled(Col)`
+  background: black;
+  opacity: 0.1;
+  height: 14vh;
+  z-index: 500;
+  display: ${({ visible }) => (!visible && 'none')};
 `;
 
 const Ground = styled.div`
   background: black;
   opacity: 0.1;
-  z-index: 300;
+  z-index: 200;
   display: ${({ visible }) => (!visible && 'none')};
 `;
 
 const Background = styled.div`
   background: black;
   opacity: 0.1;
-  z-index: 600;
+  z-index: 700;
   display: ${({ visible }) => (!visible && 'none')};
 `;
 
@@ -90,6 +98,9 @@ class Page extends Component {
               className='position-fixed h-100 p-4 d-block d-md-none'>
               <Sidebar sidebarFn={this.sidebarFn} />
             </Aside>
+            <Mask className='position-fixed px-1 pt-2 px-sm-3 pt-sm-3'
+              lg={{ span: 10, offset: 2 }} md={{ span: 9, offset: 3 }}
+              visible={type} onClick={this.groundFn} />
             <Header className='position-fixed px-1 pt-2 px-sm-3 pt-sm-3'
               lg={{ span: 10, offset: 2 }}
               md={{ span: 9, offset: 3 }}>

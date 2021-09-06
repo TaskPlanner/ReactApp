@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 
 const IconProject = styled(FaRegFolder)`
   color: ${({ theme }) => (theme.blue200)};
-  font-size: 1.6rem;
+  font-size: 1.7rem;
 `;
 
 const Project = ({ children, list, title, _id, update, proUpdate, proRemove }) => {
