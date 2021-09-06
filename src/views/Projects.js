@@ -34,13 +34,13 @@ class Projects extends Component {
       ))) {
         this.setState({
           projects: this.props.projects.sort((a, b) =>
-            (a.position > b.position) ? 1 : -1),
+            (Number(a.position) > Number(b.position)) ? 1 : -1),
         });
       }
       if (this.props.projects.length != this.state.projects.length) {
         this.setState({
           projects: this.props.projects.sort((a, b) =>
-            (a.position > b.position) ? 1 : -1),
+            (Number(a.position) > Number(b.position)) ? 1 : -1),
         });
       }
     }
@@ -55,8 +55,7 @@ class Projects extends Component {
       this.setState({ projects });
       projects.map((item, index) =>
         this.props.proUpdate({ position: index }, item._id));
-    }
-    if (result.type === 'nest') {
+    } else {
       this.setState({ result });
     }
   };
@@ -91,6 +90,7 @@ class Projects extends Component {
                             title={item.title} list={item.data}
                           >
                             <Nest
+                              type={item._id}
                               nest={item.data}
                               result={this.state.result}
                             />

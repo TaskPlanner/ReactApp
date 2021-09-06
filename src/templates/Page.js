@@ -92,11 +92,11 @@ class Page extends Component {
           <Row>
             <Aside visible={1} index={type} lg={2} md={3} sm={5} xs={6}
               className='position-fixed h-100 p-4 d-none d-md-block'>
-              <Sidebar sidebarFn={this.sidebarFn} />
+              <Sidebar />
             </Aside>
             <Aside visible={sidebar ? 1 : 0} lg={2} md={3} sm={5} xs={6}
               className='position-fixed h-100 p-4 d-block d-md-none'>
-              <Sidebar sidebarFn={this.sidebarFn} />
+              <Sidebar />
             </Aside>
             <Mask className='position-fixed px-1 pt-2 px-sm-3 pt-sm-3'
               lg={{ span: 10, offset: 2 }} md={{ span: 9, offset: 3 }}

@@ -20,8 +20,8 @@ const Register = ({ registered, reg }) => (
     <div className='my-5'>
       <Formik
         initialValues={{}}
-        onSubmit={({ email, password }) => {
-          reg(email, password);
+        onSubmit={({ email, password, confirm }) => {
+          password === confirm && reg(email, password);
         }}
       >
         {({ values, handleChange }) => {
@@ -47,6 +47,16 @@ const Register = ({ registered, reg }) => (
                 type='password'
                 placeholder='password...'
                 defaultValue={values.password}
+                onChange={handleChange}
+              />
+              <hr className='my-2' />
+              <Input
+                className='w-100'
+                autoComplete='off'
+                name='confirm'
+                type='password'
+                placeholder='confirm...'
+                defaultValue={values.confirm}
                 onChange={handleChange}
               />
               <hr className='my-2' />

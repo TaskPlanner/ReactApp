@@ -60,7 +60,6 @@ const Sidebar = ({ module, reset }) => (
 
 Sidebar.propTypes = {
   module: PropTypes.oneOf(['inbox', 'planner', 'projects']),
-  sidebarFn: PropTypes.func,
 };
 
 Sidebar.defaultProps = {

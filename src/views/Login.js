@@ -11,7 +11,7 @@ import Button from 'elements/Button';
 import Input from 'elements/Input';
 import Logo from 'files/logo.png';
 
-const Login = ({ user, auth, login }) => (
+const Login = ({ user, auth, login, registered }) => (
   useEffect(() => {
     user && login();
   }),
@@ -59,6 +59,7 @@ const Login = ({ user, auth, login }) => (
                   Login
                 </Button>
               </div>
+              {registered && <span>Register success</span>}
             </Form>
           )
         }}
@@ -72,8 +73,8 @@ const Login = ({ user, auth, login }) => (
   </Start>
 );
 
-const mapStateToProps = ({ user = null }) => ({
-  user,
+const mapStateToProps = ({ user = null, registered = null }) => ({
+  user, registered,
 });
 
 const mapDispatchToProps = (dispatch) => ({

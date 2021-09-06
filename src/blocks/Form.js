@@ -75,7 +75,7 @@ class Form extends Component {
 
     return (
       <div>
-        <Title>{module} Form</Title>
+        <Title>Element Form</Title>
         <br className='mt-5' />
         <Format.Provider value={elements}>
           <Sheet module={module} />

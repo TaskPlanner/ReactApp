@@ -133,7 +133,7 @@ class Details extends Component {
 
     return (
       <div>
-        <Title>{module} Details</Title>
+        <Title>Element Details</Title>
         <br className='mt-5' />
         <Format.Provider value={elements}>
           <Sheet item={active} module={module} />

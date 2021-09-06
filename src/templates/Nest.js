@@ -14,7 +14,7 @@ class Nest extends Component {
   componentDidMount() {
     this.setState({
       items: this.props.nest.sort((a, b) =>
-        (a.position > b.position) ? 1 : -1),
+        (Number(a.position) > Number(b.position)) ? 1 : -1),
       result: this.props.result,
     });
   };
@@ -33,13 +33,13 @@ class Nest extends Component {
       ))) {
         this.setState({
           items: this.props.nest.sort((a, b) =>
-            (a.position > b.position) ? 1 : -1),
+            (Number(a.position) > Number(b.position)) ? 1 : -1),
         });
       }
       if (this.props.nest.length != this.state.items.length) {
         this.setState({
           items: this.props.nest.sort((a, b) =>
-            (a.position > b.position) ? 1 : -1),
+            (Number(a.position) > Number(b.position)) ? 1 : -1),
         });
       }
     }
@@ -47,12 +47,14 @@ class Nest extends Component {
 
   dragFn(result) {
     if (!result.destination) return;
-    const items = this.state.items;
-    const [removed] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, removed);
-    this.setState({ items });
-    items.map((item, index) =>
-      this.props.update({ position: index }, item._id));
+    if (result.type === this.props.type) {
+      const items = this.state.items;
+      const [removed] = items.splice(result.source.index, 1);
+      items.splice(result.destination.index, 0, removed);
+      this.setState({ items });
+      items.map((item, index) =>
+        this.props.update({ position: index }, item._id));
+    }
   };
 
   moveFn(source) {
@@ -67,8 +69,10 @@ class Nest extends Component {
   };
 
   render() {
+    const { type } = this.props;
+
     return (
-      <Droppable droppableId='nest' type='nest'>
+      <Droppable droppableId={type} type={type}>
         {(provided) => (
           <div
             {...provided.droppableProps}
